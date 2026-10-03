@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile | JobMatcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --secondary: #10b981;
+            --accent: #8b5cf6;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --light: #ffffff;
+            --light-gray: #f8fafc;
+            --gray: #94a3b8;
+            --dark-gray: #64748b;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            --gradient-card: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--darker);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sidebar-header {
+            padding: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .company-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .company-info p {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .sidebar-nav {
+            padding: 30px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 30px;
+        }
+
+        .nav-title {
+            padding: 0 30px 15px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+        }
+
+        .nav-items {
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: white;
+            border-left: 3px solid var(--primary);
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .nav-badge {
+            position: absolute;
+            right: 30px;
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+        }
+
+        .plan-status {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .plan-status h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .plan-status p {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .plan-progress {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .plan-progress-fill {
+            height: 100%;
+            background: var(--secondary);
+            width: 65%;
+        }
+
+        .upgrade-btn {
+            width: 100%;
+            padding: 8px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            transition: var(--transition);
+        }
+
+        /* Header */
+        .dashboard-header {
+            height: 80px;
+            background: white;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            color: var(--darker);
+        }
+
+        .header-left p {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .header-search {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 12px 20px 12px 45px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            width: 300px;
+            font-size: 14px;
+            transition: var(--transition);
+            background: var(--light-gray);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--light-gray);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            color: var(--dark);
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Profile Content Area */
+        .dashboard-content {
+            padding: 40px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .profile-header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .profile-header-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .profile-avatar-wrapper {
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 40px;
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 3px solid white;
+        }
+
+        .avatar-upload:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .profile-header-info h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--darker);
+        }
+
+        .profile-header-info p {
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .profile-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--secondary);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .profile-status i {
+            font-size: 12px;
+        }
+
+        /* Profile Form */
+        .profile-form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .form-section-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .form-section-info h3 {
+            font-size: 20px;
+            color: var(--darker);
+            margin-bottom: 5px;
+        }
+
+        .form-section-info p {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .form-group label .required {
+            color: var(--danger);
+            margin-left: 3px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+            background: var(--light-gray);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-control.error {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .form-control.success {
+            border-color: var(--secondary);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            pointer-events: none;
+        }
+
+        select.form-control {
+            appearance: none;
+            cursor: pointer;
+            padding-right: 50px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 20px;
+            border: 2px dashed #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--light-gray);
+        }
+
+        .file-input-label:hover {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .file-input-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .file-input-text h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+            color: var(--dark);
+        }
+
+        .file-input-text p {
+            font-size: 12px;
+            color: var(--dark-gray);
+        }
+
+        #logoFile {
+            display: none;
+        }
+
+        .logo-preview {
+            margin-top: 15px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-preview.show {
+            display: flex;
+        }
+
+        .preview-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #e2e8f0;
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-info h5 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .preview-info p {
+            font-size: 12px;
+            color: var(--dark-gray);
+        }
+
+        .remove-logo {
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .last-updated {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        .last-updated span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .toast-icon.success {
+            background: var(--secondary);
+        }
+
+        .toast-icon.error {
+            background: var(--danger);
+        }
+
+        .toast-content h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .toast-content p {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        .toast-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .search-input {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-content {
+                padding: 25px;
+            }
+
+            .dashboard-header {
+                padding: 0 25px;
+            }
+
+            .profile-header {
+                padding: 30px;
+            }
+
+            .profile-header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-form-container {
+                padding: 30px;
+            }
+
+            .search-input {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-header {
+                padding: 25px;
+            }
+
+            .form-footer {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .header-right {
+                gap: 15px;
+            }
+
+            .action-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .validation-error {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .validation-error.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="company-logo" id="sidebarLogo">TC</div>
+                <div class="company-info">
+                    <h3 id="sidebarCompanyName">TechCorp Solutions</h3>
+                    <p>Professional Plan</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-title">Main</div>
+                    <ul class="nav-items">
+                        <a href="/company/" class="nav-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="/jobs/" class="nav-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Job Listings</span>
+                        </a>
+                        <a href="/add-job/" class="nav-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Post Job</span>
+                        </a>
+                        <a href="/manage-applications/" class="nav-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Applications</span>
+                        </a>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-title">Management</div>
+                    <ul class="nav-items">
+                        <a href="/company-profile/" class="nav-item active">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="/" class="nav-item">
+                            <i class="fas fa-home"></i>
+                            <span>Logout</span>
+                        </a>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="plan-status">
+                    <h4>Professional Plan</h4>
+                    <p>65% of monthly views used</p>
+                    <div class="plan-progress">
+                        <div class="plan-progress-fill"></div>
+                    </div>
+                    <button class="upgrade-btn">Upgrade Plan</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Company Profile</h1>
+                    <p>Manage your company information and settings</p>
+                </div>
+
+                <div class="header-right">
+                    <div class="header-search">
+                        <input type="text" class="search-input" placeholder="Search candidates, jobs...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+
+                    <div class="header-actions">
+                        <button class="action-btn" id="notificationBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <button class="action-btn" id="helpBtn">
+                            <i class="fas fa-question-circle"></i>
+                        </button>
+                        <button class="mobile-menu-btn" id="mobileMenuBtn">
+                            <i class="fas fa-bars"></i>
+                        </button>
+
+                        <div class="user-profile" id="userProfile">
+                            <div class="user-avatar" id="headerAvatar">JS</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Profile Content Area -->
+            <div class="dashboard-content">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-header-content">
+                        <div class="profile-avatar-wrapper">
+                            <div class="profile-avatar" id="profileAvatar">
+                                <!-- Logo will be displayed here -->
+                            </div>
+                            <div class="avatar-upload" id="avatarUploadBtn">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        <div class="profile-header-info">
+                            <h1 id="profileCompanyName">TechCorp Solutions</h1>
+                            <p id="profileIndustry">Technology • 100-500 employees</p>
+                            <div class="profile-status">
+                                <i class="fas fa-check-circle"></i>
+                                <span id="profileRights">Verified Company</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Form -->
+                <div class="profile-form-container">
+                    <form id="companyProfileForm" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                        <!-- Company Information Section -->
+                        <div class="form-section">
+                            <div class="form-section-header">
+                                <div class="form-section-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="form-section-info">
+                                    <h3>Company Information</h3>
+                                    <p>Basic details about your company</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Company Name <span class="required">*</span></label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="company_name"
+                                           name="company_name"
+                                           placeholder="Enter company name"
+                                           value="TechCorp Solutions">
+                                    <div class="validation-error" id="company_name_error">Company name is required</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Industry <span class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <select class="form-control" id="industry" name="industry">
+                                            <option value="">Select industry</option>
+                                            <option value="technology" selected>Technology</option>
+                                            <option value="finance">Finance</option>
+                                            <option value="healthcare">Healthcare</option>
+                                            <option value="retail">Retail</option>
+                                            <option value="manufacturing">Manufacturing</option>
+                                            <option value="education">Education</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="validation-error" id="industry_error">Industry is required</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Company Size <span class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <select class="form-control" id="size" name="size">
+                                            <option value="">Select company size</option>
+                                            <option value="1-10">1-10 employees</option>
+                                            <option value="11-50">11-50 employees</option>
+                                            <option value="51-200">51-200 employees</option>
+                                            <option value="201-500" selected>201-500 employees</option>
+                                            <option value="501-1000">501-1000 employees</option>
+                                            <option value="1000+">1000+ employees</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="validation-error" id="size_error">Company size is required</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Website <span class="required">*</span></label>
+                                    <input type="url"
+                                           class="form-control"
+                                           id="website"
+                                           name="website"
+                                           placeholder="https://www.example.com"
+                                           value="https://techcorp.example.com">
+                                    <div class="validation-error" id="website_error">Valid website URL is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Company Description <span class="required">*</span></label>
+                                <textarea class="form-control"
+                                          id="description"
+                                          name="description"
+                                          rows="4"
+                                          placeholder="Describe your company culture, mission, and values">TechCorp Solutions is a leading technology company specializing in innovative software solutions. We're committed to excellence and innovation in everything we do.</textarea>
+                                <div class="validation-error" id="description_error">Description is required (minimum 50 characters)</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Company Logo</label>
+                                <div class="file-input-wrapper">
+                                    <label for="logoFile" class="file-input-label">
+                                        <div class="file-input-icon">
+                                            <i class="fas fa-upload"></i>
+                                        </div>
+                                        <div class="file-input-text">
+                                            <h4>Upload Company Logo</h4>
+                                            <p>PNG, JPG or SVG (Max. 5MB)</p>
+                                        </div>
+                                    </label>
+                                    <input type="file"
+                                           id="logoFile"
+                                           name="logo"
+                                           accept=".png,.jpg,.jpeg,.svg"
+                                           style="display: none;">
+                                </div>
+                                <div class="logo-preview" id="logoPreview">
+                                    <div class="preview-image">
+                                        <img id="logoPreviewImage" src="" alt="Logo Preview">
+                                    </div>
+                                    <div class="preview-info">
+                                        <h5 id="logoFileName">logo.png</h5>
+                                        <p id="logoFileSize">2.4 MB</p>
+                                        <div class="remove-logo" id="removeLogo">
+                                            <i class="fas fa-trash"></i>
+                                            <span>Remove logo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information Section -->
+                        <div class="form-section">
+                            <div class="form-section-header">
+                                <div class="form-section-icon">
+                                    <i class="fas fa-address-book"></i>
+                                </div>
+                                <div class="form-section-info">
+                                    <h3>Contact Information</h3>
+                                    <p>How candidates can reach your company</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Company Email <span class="required">*</span></label>
+                                    <input type="email"
+                                           class="form-control"
+                                           id="company_email"
+                                           name="company_email"
+                                           placeholder="contact@company.com"
+                                           value="contact@techcorp.example.com">
+                                    <div class="validation-error" id="company_email_error">Valid company email is required</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Company Phone <span class="required">*</span></label>
+                                    <input type="tel"
+                                           class="form-control"
+                                           id="company_phone"
+                                           name="company_phone"
+                                           placeholder="(123) 456-7890"
+                                           value="(555) 123-4567">
+                                    <div class="validation-error" id="company_phone_error">Valid phone number is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Primary Contact Person Section -->
+                        <div class="form-section">
+                            <div class="form-section-header">
+                                <div class="form-section-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="form-section-info">
+                                    <h3>Primary Contact Person</h3>
+                                    <p>Main point of contact for JobMatcher</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>First Name <span class="required">*</span></label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="fname"
+                                           name="fname"
+                                           placeholder="John"
+                                           value="John">
+                                    <div class="validation-error" id="fname_error">First name is required</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Last Name <span class="required">*</span></label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="lname"
+                                           name="lname"
+                                           placeholder="Smith"
+                                           value="Smith">
+                                    <div class="validation-error" id="lname_error">Last name is required</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Email <span class="required">*</span></label>
+                                    <input type="email"
+                                           class="form-control"
+                                           id="email"
+                                           name="email"
+                                           placeholder="john.smith@company.com"
+                                           value="john.smith@techcorp.example.com">
+                                    <div class="validation-error" id="email_error">Valid email is required</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Create New Password</label>
+                                    <input type="password"
+                                           class="form-control"
+                                           id="password"
+                                           name="password"
+                                           autocomplete="new-password"
+                                           placeholder="Leave blank to keep current password">
+                                    <div class="validation-error" id="password_error">Password must be at least 8 characters</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Status Section -->
+                        <div class="form-section">
+                            <div class="form-section-header">
+                                <div class="form-section-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="form-section-info">
+                                    <h3>Account Status</h3>
+                                    <p>Your account information and permissions</p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Account Rights</label>
+                                    <div class="select-wrapper">
+                                        <select class="form-control" id="rights" name="rights" disabled>
+                                            <option value="New Company" selected>New Company</option>
+                                            <option value="Verified">Verified</option>
+                                            <option value="Premium">Premium</option>
+                                            <option value="Enterprise">Enterprise</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <small style="color: var(--gray); font-size: 12px; margin-top: 5px; display: block;">
+                                        Contact support to change account type
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Registration Date</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="date"
+                                           name="date"
+                                           value="January 15, 2024"
+                                           disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Footer -->
+                        <div class="form-footer">
+                            <div class="last-updated">
+                                Last updated: <span id="lastUpdated">January 20, 2024</span>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" id="cancelBtn">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary" id="saveBtn">
+                                    <i class="fas fa-save"></i>
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon success" id="toastIcon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="toast-content">
+            <h4 id="toastTitle">Success!</h4>
+            <p id="toastMessage">Profile updated successfully</p>
+        </div>
+        <button class="toast-close" id="toastClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <script>
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const notificationBtn = document.getElementById('notificationBtn');
+        const helpBtn = document.getElementById('helpBtn');
+        const userProfile = document.getElementById('userProfile');
+        const avatarUploadBtn = document.getElementById('avatarUploadBtn');
+        const logoFileInput = document.getElementById('logoFile');
+        const logoPreview = document.getElementById('logoPreview');
+        const logoPreviewImage = document.getElementById('logoPreviewImage');
+        const logoFileName = document.getElementById('logoFileName');
+        const logoFileSize = document.getElementById('logoFileSize');
+        const removeLogo = document.getElementById('removeLogo');
+        const profileAvatar = document.getElementById('profileAvatar');
+        const sidebarLogo = document.getElementById('sidebarLogo');
+        const sidebarCompanyName = document.getElementById('sidebarCompanyName');
+        const profileCompanyName = document.getElementById('profileCompanyName');
+        const profileIndustry = document.getElementById('profileIndustry');
+        const profileRights = document.getElementById('profileRights');
+        const headerAvatar = document.getElementById('headerAvatar');
+        const companyProfileForm = document.getElementById('companyProfileForm');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const toast = document.getElementById('toast');
+        const toastIcon = document.getElementById('toastIcon');
+        const toastTitle = document.getElementById('toastTitle');
+        const toastMessage = document.getElementById('toastMessage');
+        const toastClose = document.getElementById('toastClose');
+
+        // Form fields
+        const formFields = [
+            'company_name', 'company_email', 'company_phone', 'website', 'size', 'industry',
+            'description', 'fname', 'lname', 'email', 'password', 'rights', 'date'
+        ];
+
+        // Sample data - In production, this would come from your backend API
+        const companyData = {
+            company_name: "{{company.company_name}}",
+            company_email: "{{company.company_email}}",
+            company_phone: "{{company.company_phone}}",
+            website: "{{company.website}}",
+            logo: "{{company.logo.url}}", // logo.png
+            size: "{{company.size}}",
+            industry: "{{company.industry}}",
+            description: `{{company.description}}`,
+            fname: "{{company.fname}}",
+            lname: "{{company.lname}}",
+            email: "{{company.email}}",
+            password: "", // Not shown for security
+            rights: "Company",
+            date: "{{company.date}}",
+            lastUpdated: "January 20, 2024"
+        };
+
+        // Initialize
+        function init() {
+            loadCompanyData();
+            setupEventListeners();
+            setupFormValidation();
+        }
+
+        function loadCompanyData() {
+            // Set form values from companyData
+            formFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element && companyData[field]) {
+                    if (element.type === 'select-one') {
+                        element.value = companyData[field];
+                    } else {
+                        element.value = companyData[field];
+                    }
+                }
+            });
+
+            // Update last updated
+            document.getElementById('lastUpdated').textContent = companyData.lastUpdated;
+
+            // Update UI elements
+            updateCompanyUI();
+        }
+
+        function updateCompanyUI() {
+            // Update company name in multiple places
+            const companyName = document.getElementById('company_name').value;
+            profileCompanyName.textContent = companyName;
+            sidebarCompanyName.textContent = companyName;
+
+            // Update industry and size
+            const industry = document.getElementById('industry').value;
+            const size = document.getElementById('size').value;
+            const sizeText = size === '201-500' ? '201-500 employees' : size;
+            profileIndustry.textContent = `${industry} • ${sizeText}`;
+
+            // Update rights/status
+            const rights = document.getElementById('rights').value;
+            profileRights.textContent = rights === 'New Company' ? 'New Company' : 'Verified Company';
+
+            // Update avatars with initials
+            const fname = document.getElementById('fname').value;
+            const lname = document.getElementById('lname').value;
+            const initials = (fname[0] + lname[0]).toUpperCase();
+            sidebarLogo.textContent = companyName.substring(0, 2).toUpperCase();
+            headerAvatar.textContent = initials;
+
+            if (companyData.logo) {
+                // In production, this would load the actual logo image
+                profileAvatar.innerHTML = `<img src="${companyData.logo}" alt="${companyName}">`;
+            } else {
+                // Show initials if no logo
+                profileAvatar.textContent = companyName.substring(0, 2).toUpperCase();
+            }
+        }
+
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 1200 &&
+                    !sidebar.contains(e.target) &&
+                    e.target !== mobileMenuBtn &&
+                    !mobileMenuBtn.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // Notification button
+            notificationBtn.addEventListener('click', () => {
+                showToast('info', 'Notifications', 'You have 3 new notifications');
+            });
+
+            // Help button
+            helpBtn.addEventListener('click', () => {
+                showToast('info', 'Help Center', 'Opening help documentation...');
+            });
+
+            // User profile dropdown (simplified)
+            userProfile.addEventListener('click', () => {
+                showToast('info', 'Profile Menu', 'In production, this would show a dropdown menu');
+            });
+
+            // Logo upload
+            avatarUploadBtn.addEventListener('click', () => {
+                logoFileInput.click();
+            });
+
+            logoFileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Validate file type and size
+                    const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
+                    const maxSize = 5 * 1024 * 1024; // 5MB
+
+                    if (!validTypes.includes(file.type)) {
+                        showToast('error', 'Invalid File', 'Please upload PNG, JPG, or SVG files only');
+                        return;
+                    }
+
+                    if (file.size > maxSize) {
+                        showToast('error', 'File Too Large', 'Maximum file size is 5MB');
+                        return;
+                    }
+
+                    // Preview the image
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        logoPreviewImage.src = e.target.result;
+                        logoFileName.textContent = file.name;
+                        logoFileSize.textContent = formatFileSize(file.size);
+                        logoPreview.classList.add('show');
+                    };
+                    reader.readAsDataURL(file);
+
+                    showToast('success', 'Logo Uploaded', 'Your logo will be saved when you click Save Changes');
+                }
+            });
+
+            // Remove logo
+            removeLogo.addEventListener('click', function() {
+                logoPreview.classList.remove('show');
+                logoFileInput.value = '';
+                showToast('info', 'Logo Removed', 'Logo will be removed when you save changes');
+            });
+
+            // Form submission
+            companyProfileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (validateForm()) {
+                    saveProfile();
+                }
+            });
+
+            // Cancel button
+            cancelBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to discard changes?')) {
+                    loadCompanyData(); // Reload original data
+                    showToast('info', 'Changes Discarded', 'All changes have been reverted');
+                }
+            });
+
+            // Toast close button
+            toastClose.addEventListener('click', function() {
+                hideToast();
+            });
+
+            // Auto-hide toast after 5 seconds
+            toast.addEventListener('animationend', function() {
+                if (toast.classList.contains('show')) {
+                    setTimeout(hideToast, 5000);
+                }
+            });
+
+            // Real-time UI updates on form changes
+            formFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element) {
+                    element.addEventListener('input', updateCompanyUI);
+                    element.addEventListener('change', updateCompanyUI);
+                }
+            });
+        }
+
+        function setupFormValidation() {
+            // Add validation styles on blur
+            formFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element && !element.disabled) {
+                    element.addEventListener('blur', function() {
+                        validateField(this);
+                    });
+                }
+            });
+        }
+
+        function validateField(field) {
+            const value = field.value.trim();
+            const errorElement = document.getElementById(field.id + '_error');
+
+            // Clear previous error
+            field.classList.remove('error', 'success');
+            if (errorElement) errorElement.classList.remove('show');
+
+            // Skip validation for empty optional fields
+            if (!field.required && !value) {
+                field.classList.add('success');
+                return true;
+            }
+
+            let isValid = true;
+            let errorMessage = '';
+
+            switch(field.id) {
+                case 'company_name':
+                    if (!value) {
+                        isValid = false;
+                        errorMessage = 'Company name is required';
+                    }
+                    break;
+
+                case 'company_email':
+                    if (!value || !isValidEmail(value)) {
+                        isValid = false;
+                        errorMessage = 'Valid company email is required';
+                    }
+                    break;
+
+                case 'company_phone':
+                    if (!value || !isValidPhone(value)) {
+                        isValid = false;
+                        errorMessage = 'Valid phone number is required';
+                    }
+                    break;
+
+                case 'website':
+                    if (!value || !isValidUrl(value)) {
+                        isValid = false;
+                        errorMessage = 'Valid website URL is required';
+                    }
+                    break;
+
+                case 'industry':
+                case 'size':
+                    if (!value) {
+                        isValid = false;
+                        errorMessage = 'This field is required';
+                    }
+                    break;
+
+                case 'description':
+                    if (!value || value.length < 50) {
+                        isValid = false;
+                        errorMessage = 'Description must be at least 50 characters';
+                    }
+                    break;
+
+                case 'fname':
+                case 'lname':
+                    if (!value) {
+                        isValid = false;
+                        errorMessage = 'This field is required';
+                    }
+                    break;
+
+                case 'email':
+                    if (!value || !isValidEmail(value)) {
+                        isValid = false;
+                        errorMessage = 'Valid email is required';
+                    }
+                    break;
+
+                case 'password':
+                    if (value && value.length < 8) {
+                        isValid = false;
+                        errorMessage = 'Password must be at least 8 characters';
+                    }
+                    break;
+            }
+
+            if (!isValid && errorElement) {
+                field.classList.add('error');
+                errorElement.textContent = errorMessage;
+                errorElement.classList.add('show');
+            } else if (value) {
+                field.classList.add('success');
+            }
+
+            return isValid;
+        }
+
+        function validateForm() {
+            let isValid = true;
+
+            formFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element && !element.disabled && !validateField(element)) {
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        function saveProfile() {
+            // Show loading state
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<div class="loading-spinner"></div> Saving...';
+            saveBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+            companyProfileForm.submit();
+                // In production, this would be a fetch/POST to your backend
+                const formData = new FormData(companyProfileForm);
+
+                // Update companyData with form values
+                formFields.forEach(field => {
+                    const element = document.getElementById(field);
+                    if (element && !element.disabled) {
+                        companyData[field] = element.value;
+                    }
+                });
+
+                // Update last updated timestamp
+                const now = new Date();
+                companyData.lastUpdated = now.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                // Update UI
+                updateCompanyUI();
+                document.getElementById('lastUpdated').textContent = companyData.lastUpdated;
+
+                // Reset button state
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+
+                // Show success message
+                showToast('success', 'Profile Saved', 'Your company profile has been updated successfully');
+
+                // In production: Submit form data to backend
+                // fetch('/api/company/profile/', {
+                //     method: 'POST',
+                //     body: formData
+                // }).then(response => response.json())
+                //   .then(data => {
+                //       // Handle response
+                //   }).catch(error => {
+                //       showToast('error', 'Error', 'Failed to save profile');
+                //   });
+
+            }, 1500);
+        }
+
+        function showToast(type, title, message) {
+            // Set toast content
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+
+            // Set toast icon and color
+            toastIcon.className = 'toast-icon ' + type;
+            toastIcon.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'info-circle'}"></i>`;
+
+            // Show toast
+            toast.classList.add('show');
+        }
+
+        function hideToast() {
+            toast.classList.remove('show');
+        }
+
+        // Utility functions
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function isValidPhone(phone) {
+            // Simple phone validation - adjust as needed
+            const re = /^[\+]?[0-9\s\-\(\)]+$/;
+            return re.test(phone);
+        }
+
+        function isValidUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Initialize the dashboard
+        init();
+    </script>
+</body>
+</html>

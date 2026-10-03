@@ -1,0 +1,2514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications | JobMatcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --primary-dark: #3a56d4;
+            --secondary: #4cc9f0;
+            --accent: #7209b7;
+            --accent-light: #9d4edd;
+            --success: #38b000;
+            --warning: #ff9e00;
+            --danger: #ff6b6b;
+            --info: #17a2b8;
+            --light: #ffffff;
+            --light-gray: #f8f9fa;
+            --gray: #adb5bd;
+            --dark-gray: #6c757d;
+            --dark: #212529;
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #4361ee 0%, #4895ef 100%);
+            --gradient-secondary: linear-gradient(135deg, #4cc9f0 0%, #38b000 20%, #7209b7 100%);
+            --gradient-accent: linear-gradient(135deg, #7209b7 0%, #9d4edd 100%);
+            --gradient-light: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #fafcff;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Background Elements */
+        .background-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.03) 0%, rgba(72, 149, 239, 0.01) 100%);
+        }
+
+        .circle-1 {
+            width: 600px;
+            height: 600px;
+            top: -300px;
+            right: -200px;
+            animation: float 25s infinite linear;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            left: -100px;
+            animation: float 30s infinite linear reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 15px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+            padding: 8px 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--gradient-accent);
+            color: white;
+            box-shadow: 0 5px 15px rgba(114, 9, 183, 0.2);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(114, 9, 183, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-light {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-light:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--dark);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Applications Container */
+        .applications-container {
+            padding: 180px 0 100px;
+            position: relative;
+        }
+
+        .applications-header {
+            margin-bottom: 40px;
+        }
+
+        .applications-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .applications-subtitle {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-icon.total {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .stat-icon.pending {
+            background: rgba(255, 158, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .stat-icon.reviewed {
+            background: rgba(23, 162, 184, 0.1);
+            color: var(--info);
+        }
+
+        .stat-icon.interview {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--secondary);
+        }
+
+        .stat-icon.accepted {
+            background: rgba(56, 176, 0, 0.1);
+            color: var(--success);
+        }
+
+        .stat-icon.rejected {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--danger);
+        }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .stat-info p {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        /* Applications Content */
+        .applications-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+        }
+
+        .applications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Filters */
+        .filters-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .filters-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+
+        .clear-filters {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .clear-filters:hover {
+            color: var(--primary-dark);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .filter-select {
+            padding: 12px 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background: white;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        /* Application Cards */
+        .application-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .application-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .application-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .application-job-info {
+            flex: 1;
+        }
+
+        .application-job-title {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .application-company {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .application-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .application-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .application-meta-item i {
+            color: var(--primary);
+        }
+
+        .application-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-submitted {
+            background: rgba(255, 158, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .status-reviewed {
+            background: rgba(23, 162, 184, 0.1);
+            color: var(--info);
+        }
+
+        .status-interview {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--secondary);
+        }
+
+        .status-offer {
+            background: rgba(56, 176, 0, 0.1);
+            color: var(--success);
+        }
+
+        .status-rejected {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--danger);
+        }
+
+        .application-id {
+            font-size: 12px;
+            color: var(--dark-gray);
+        }
+
+        .application-card-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .application-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .detail-label {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .application-progress {
+            padding: 20px;
+            background: var(--light-gray);
+            border-radius: 12px;
+        }
+
+        .progress-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .progress-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .progress-timeline:before {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e9ecef;
+        }
+
+        .timeline-step {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .timeline-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-step.completed:before {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .timeline-step.current:before {
+            background: var(--primary);
+            border-color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        .timeline-step:before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #e9ecef;
+            z-index: 1;
+        }
+
+        .timeline-step.completed:after {
+            content: '✓';
+            position: absolute;
+            left: -30px;
+            top: 4px;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .timeline-info h4 {
+            font-size: 13px;
+            margin-bottom: 3px;
+            color: var(--dark);
+        }
+
+        .timeline-info p {
+            font-size: 12px;
+            color: var(--dark-gray);
+        }
+
+        .timeline-step.completed .timeline-info h4 {
+            color: var(--success);
+        }
+
+        .timeline-step.current .timeline-info h4 {
+            color: var(--primary);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 97, 238, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0); }
+        }
+
+        .application-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .application-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .action-btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .action-btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .action-btn-light {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        .action-btn-light:hover {
+            background: var(--gray);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .days-ago {
+            color: var(--dark-gray);
+            font-size: 13px;
+        }
+
+        /* No Applications */
+        .no-applications {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .no-applications i {
+            font-size: 4rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .no-applications h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .no-applications p {
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Sidebar */
+        .applications-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .quick-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .stat-label i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .interview-tips {
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.05) 0%, rgba(72, 149, 239, 0.02) 100%);
+            border-left: 4px solid var(--primary);
+        }
+
+        .tips-list {
+            list-style: none;
+        }
+
+        .tips-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .tips-list li:last-child {
+            border-bottom: none;
+        }
+
+        .tips-list i {
+            color: var(--primary);
+            margin-top: 3px;
+            min-width: 20px;
+        }
+
+        .tips-list p {
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .application-timeline {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .timeline-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .timeline-icon.application {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .timeline-icon.review {
+            background: rgba(23, 162, 184, 0.1);
+            color: var(--info);
+        }
+
+        .timeline-icon.interview {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--secondary);
+        }
+
+        .timeline-icon.offer {
+            background: rgba(56, 176, 0, 0.1);
+            color: var(--success);
+        }
+
+        .timeline-content h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .timeline-content p {
+            font-size: 13px;
+            color: var(--dark-gray);
+            margin-bottom: 3px;
+        }
+
+        .timeline-time {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 50px;
+        }
+
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid #e9ecef;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pagination-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .pagination-btn:hover:not(.active) {
+            background: var(--light-gray);
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0 30px;
+            background: var(--dark);
+            color: white;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-logo .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            color: var(--primary);
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .applications-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .application-card-body {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .auth-buttons {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .applications-container {
+                padding: 150px 0 60px;
+            }
+
+            .applications-title {
+                font-size: 2rem;
+            }
+
+            .stats-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .application-card-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .application-status {
+                align-items: flex-start;
+            }
+
+            .application-actions {
+                flex-wrap: wrap;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .applications-title {
+                font-size: 1.8rem;
+            }
+
+            .application-card {
+                padding: 20px;
+            }
+
+            .application-job-title {
+                font-size: 1.2rem;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            flex: 1;
+        }
+
+        .mobile-menu-links li {
+            margin-bottom: 20px;
+        }
+
+        .mobile-menu-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 18px;
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin-bottom: 30px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="background-elements">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="/user/" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    JobMatcher
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="/user#home">Home</a></li>
+                    <li><a href="/user#features">Features</a></li>
+                    <li><a href="/user#process">How It Works</a></li>
+                    <li><a href="/user#testimonials">Testimonials</a></li>
+                    <li><a href="/job-lists/">Vacancy</a></li>
+                    <li><a href="/applications/">Applications</a></li>
+                </ul>
+
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="window.location.href='/'">Logout</button>
+                    <button class="btn btn-primary" onclick="window.location.href='/profile/'">Profile</button>
+                </div>
+
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="job_listings.html" class="logo" style="font-size: 22px;">
+                <div class="logo-icon" style="width: 35px; height: 35px;">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                JobMatcher
+            </a>
+            <button class="close-menu" id="closeMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="mobile-menu-links">
+            <li><a href="job_listings.html#home">Home</a></li>
+            <li><a href="job_listings.html#job-listings">Find Jobs</a></li>
+            <li><a href="applications.html" class="active">My Applications</a></li>
+            <li><a href="job_listings.html#features">Features</a></li>
+            <li><a href="job_listings.html#testimonials">Success Stories</a></li>
+        </ul>
+        <div class="mobile-auth-buttons">
+            <button class="btn btn-outline" onclick="window.location.href='/'">Logout</button>
+            <button class="btn btn-primary" onclick="window.location.href='/profile/'">Profile</button>
+        </div>
+    </div>
+
+    <!-- Applications Container -->
+    <div class="applications-container">
+        <div class="container">
+            <div class="applications-header">
+                <h1 class="applications-title">My Applications</h1>
+                <p class="applications-subtitle">Track all your job applications in one place. Monitor status, view timelines, and manage your job search.</p>
+            </div>
+
+            <!-- Statistics Overview -->
+            <div class="stats-overview" id="statsOverview">
+                <!-- Stats populated by JavaScript -->
+            </div>
+
+            <div class="applications-content">
+                <!-- Main Applications List -->
+                <div class="applications-main">
+                    <!-- Filters -->
+                    <div class="filters-card">
+                        <div class="filters-header">
+                            <h3 class="filters-title">Filter Applications</h3>
+                            <button class="clear-filters" id="clearFilters">
+                                <i class="fas fa-times"></i> Clear Filters
+                            </button>
+                        </div>
+                        <div class="filters-grid">
+                            <div class="filter-group">
+                                <label for="statusFilter">Status</label>
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="">All Statuses</option>
+                                    <option value="submitted">Submitted</option>
+                                    <option value="reviewed">Under Review</option>
+                                    <option value="interview">Interview</option>
+                                    <option value="offer">Offer</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="dateFilter">Date Applied</label>
+                                <select id="dateFilter" class="filter-select">
+                                    <option value="">Any Time</option>
+                                    <option value="7">Last 7 days</option>
+                                    <option value="30">Last 30 days</option>
+                                    <option value="90">Last 3 months</option>
+                                    <option value="180">Last 6 months</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="sortFilter">Sort By</label>
+                                <select id="sortFilter" class="filter-select">
+                                    <option value="newest">Newest First</option>
+                                    <option value="oldest">Oldest First</option>
+                                    <option value="status">Status</option>
+                                    <option value="company">Company Name</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Applications List -->
+                    <div class="applications-list" id="applicationsList">
+                        <!-- Applications populated by JavaScript -->
+                    </div>
+
+                    <!-- No Applications Message -->
+                    <div class="no-applications" id="noApplications" style="display: none;">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>No Applications Yet</h3>
+                        <p>You haven't applied to any jobs yet. Start your job search and apply to positions that match your skills and interests.</p>
+                        <button class="btn btn-primary" onclick="window.location.href='/job-lists/'">
+                            <i class="fas fa-search"></i> Find Jobs
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="applications-sidebar">
+                    <!-- Quick Stats -->
+                    <div class="sidebar-card">
+                        <h3 class="sidebar-title">Application Stats</h3>
+                        <div class="quick-stats" id="quickStats">
+                            <!-- Quick stats populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Interview Tips -->
+                    <div class="sidebar-card interview-tips">
+                        <h3 class="sidebar-title">Interview Tips</h3>
+                        <ul class="tips-list">
+                            <li>
+                                <i class="fas fa-lightbulb"></i>
+                                <p>Research the company thoroughly before interviews</p>
+                            </li>
+                            <li>
+                                <i class="fas fa-comments"></i>
+                                <p>Prepare questions to ask the interviewer</p>
+                            </li>
+                            <li>
+                                <i class="fas fa-clock"></i>
+                                <p>Arrive 10-15 minutes early for virtual interviews</p>
+                            </li>
+                            <li>
+                                <i class="fas fa-star"></i>
+                                <p>Follow up with a thank-you email within 24 hours</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="sidebar-card application-timeline">
+                        <h3 class="sidebar-title">Recent Activity</h3>
+                        <div class="timeline-feed" id="timelineFeed">
+                            <!-- Timeline items populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        JobMatcher
+                    </div>
+                    <p style="color: var(--gray); margin-bottom: 20px;">Intelligent job matching for the modern professional. Find opportunities that align with your skills and career goals.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="job_listings.html#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="job_listings.html#job-listings"><i class="fas fa-chevron-right"></i> Find Jobs</a></li>
+                        <li><a href="applications.html"><i class="fas fa-chevron-right"></i> My Applications</a></li>
+                        <li><a href="job_listings.html#features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                        <li><a href="job_listings.html#testimonials"><i class="fas fa-chevron-right"></i> Success Stories</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Resume Builder</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Interview Prep</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Career Advice</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-envelope"></i> support@jobmatcher.com</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Tech Street, San Francisco, CA</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 JobMatcher. All rights reserved. | <a href="#" style="color: var(--primary-light);">Privacy Policy</a> | <a href="#" style="color: var(--primary-light);">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Details Modal -->
+    <div class="modal" id="applicationDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Application Details</h2>
+                <button class="close-modal" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="applicationDetailsContent">
+                <!-- Application details populated by JavaScript -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal()">
+                    Close
+                </button>
+                <button class="btn btn-primary" id="viewJobBtn">
+                    <i class="fas fa-eye"></i> View Job Posting
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Confirmation Modal -->
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Withdraw Application</h2>
+                <button class="close-modal" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to withdraw your application for <strong id="withdrawJobTitle">Senior Frontend Developer</strong> at <strong id="withdrawCompany">TechCorp Inc.</strong>?</p>
+                <p>This action cannot be undone.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeModal()">
+                    Cancel
+                </button>
+                <button class="btn btn-danger" onclick="confirmWithdraw()">
+                    <i class="fas fa-trash"></i> Withdraw Application
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample applications data
+        const applicationsData = [
+            {% for i in apps %}
+            {
+                id: "APP-2026-0{{i.id}}",
+                jobId: {{i.job.id}},
+                jobTitle: "{{i.job.title}}",
+                company: "{{i.job.company.company_name}}",
+                companyLogo: "{{i.job.company.logo.url}}",
+                location: "{{i.job.location}}",
+                type: "{{i.job.type}}",
+                appliedDate: "{{i.date}}",
+                status: "{{i.status|lower}}",
+                statusHistory: [
+                    { status: "pending", date: "", note: "Application submitted" },
+                    { status: "reviewed", date: "", note: "Application under review" },
+                    { status: "interview", date: "", note: "Interview scheduled" },
+                    { status: "hired", date: "", note: "Congratulations. You are hired!" }
+                ],
+                nextStep: "Technical interview - Oct 30, 2023",
+                salary: "${{i.job.salary_min}} - ${{i.job.salary_max}}",
+                department: "{{i.job.department}}",
+                applicationMaterials: {
+                    resume: "john_doe_resume.pdf",
+                    coverLetter: "cover_letter_techcorp.pdf",
+                    portfolio: "portfolio.zip"
+                },
+                interviewDate: "2023-10-30",
+                interviewType: "Technical Interview",
+                contactPerson: "Sarah Johnson - Hiring Manager",
+                notes: "Technical interview focusing on React and system design."
+            },
+            {% endfor %}
+        ];
+
+        // State
+        let currentApplications = [...applicationsData];
+        let currentPage = 1;
+        const applicationsPerPage = 4;
+        let currentFilters = {
+            status: '',
+            date: '',
+            sort: 'newest'
+        };
+        let currentWithdrawAppId = null;
+
+        // DOM Elements
+        const applicationsList = document.getElementById('applicationsList');
+        const noApplications = document.getElementById('noApplications');
+        const statsOverview = document.getElementById('statsOverview');
+        const quickStats = document.getElementById('quickStats');
+        const timelineFeed = document.getElementById('timelineFeed');
+        const pagination = document.getElementById('pagination');
+        const statusFilter = document.getElementById('statusFilter');
+        const dateFilter = document.getElementById('dateFilter');
+        const sortFilter = document.getElementById('sortFilter');
+        const clearFiltersBtn = document.getElementById('clearFilters');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderApplications();
+            updateStats();
+            updateTimeline();
+            setupEventListeners();
+            setupHeader();
+        });
+
+        function setupEventListeners() {
+            // Filter changes
+            statusFilter.addEventListener('change', applyFilters);
+            dateFilter.addEventListener('change', applyFilters);
+            sortFilter.addEventListener('change', applyFilters);
+
+            // Clear filters
+            clearFiltersBtn.addEventListener('click', clearFilters);
+        }
+
+        function applyFilters() {
+            currentFilters = {
+                status: statusFilter.value,
+                date: dateFilter.value,
+                sort: sortFilter.value
+            };
+
+            currentApplications = applicationsData.filter(app => {
+                // Status filter
+                const statusMatch = !currentFilters.status || app.status === currentFilters.status;
+
+                // Date filter
+                let dateMatch = true;
+                if (currentFilters.date) {
+                    const daysAgo = parseInt(currentFilters.date);
+                    const cutoffDate = new Date();
+                    cutoffDate.setDate(cutoffDate.getDate() - daysAgo);
+                    const appliedDate = new Date(app.appliedDate);
+                    dateMatch = appliedDate >= cutoffDate;
+                }
+
+                return statusMatch && dateMatch;
+            });
+
+            // Sort applications
+            sortApplications();
+
+            currentPage = 1;
+            renderApplications();
+            updateStats();
+        }
+
+        function sortApplications() {
+            switch(currentFilters.sort) {
+                case 'oldest':
+                    currentApplications.sort((a, b) => new Date(a.appliedDate) - new Date(b.appliedDate));
+                    break;
+                case 'status':
+                    currentApplications.sort((a, b) => {
+                        const statusOrder = { submitted: 1, reviewed: 2, interview: 3, offer: 4, rejected: 5 };
+                        return statusOrder[a.status] - statusOrder[b.status];
+                    });
+                    break;
+                case 'company':
+                    currentApplications.sort((a, b) => a.company.localeCompare(b.company));
+                    break;
+                default: // newest
+                    currentApplications.sort((a, b) => new Date(b.appliedDate) - new Date(a.appliedDate));
+            }
+        }
+
+        function clearFilters() {
+            statusFilter.value = '';
+            dateFilter.value = '';
+            sortFilter.value = 'newest';
+            applyFilters();
+        }
+
+        function renderApplications() {
+            // Calculate pagination
+            const totalPages = Math.ceil(currentApplications.length / applicationsPerPage);
+            const startIndex = (currentPage - 1) * applicationsPerPage;
+            const endIndex = startIndex + applicationsPerPage;
+            const appsToShow = currentApplications.slice(startIndex, endIndex);
+
+            // Clear current applications
+            applicationsList.innerHTML = '';
+
+            if (appsToShow.length === 0) {
+                applicationsList.style.display = 'none';
+                noApplications.style.display = 'block';
+                pagination.innerHTML = '';
+                return;
+            }
+
+            applicationsList.style.display = 'flex';
+            noApplications.style.display = 'none';
+
+            // Render applications
+            appsToShow.forEach(app => {
+                const appCard = createApplicationCard(app);
+                applicationsList.appendChild(appCard);
+            });
+
+            // Render pagination
+            renderPagination(totalPages);
+        }
+
+        function createApplicationCard(app) {
+            const card = document.createElement('div');
+            card.className = 'application-card';
+            card.dataset.appId = app.id;
+
+            // Calculate days ago
+            const appliedDate = new Date(app.appliedDate);
+            const today = new Date();
+            const daysAgo = Math.floor((today - appliedDate) / (1000 * 60 * 60 * 24));
+
+            // Get status text and class
+            const statusInfo = getStatusInfo(app.status);
+
+            // Create timeline steps
+            const timelineSteps = generateTimelineSteps(app);
+
+            card.innerHTML = `
+                <div class="application-card-header">
+                    <div class="application-job-info">
+                        <h3 class="application-job-title">${app.jobTitle}</h3>
+                        <div class="application-company">
+                            <i class="fas fa-building"></i> ${app.company}
+                        </div>
+                        <div class="application-meta">
+                            <div class="application-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${app.location}</span>
+                            </div>
+                            <div class="application-meta-item">
+                                <i class="fas fa-briefcase"></i>
+                                <span>${app.type}</span>
+                            </div>
+                            <div class="application-meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Applied: ${formatDate(app.appliedDate)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="application-status">
+                        <span class="status-badge ${statusInfo.class}">${statusInfo.text}</span>
+                        <span class="application-id">${app.id}</span>
+                    </div>
+                </div>
+
+                <div class="application-card-body">
+                    <div class="application-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">${app.department}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Salary Range:</span>
+                            <span class="detail-value">${app.salary}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Next Step:</span>
+                            <span class="detail-value">${app.nextStep}</span>
+                        </div>
+                        ${app.interviewDate ? `
+                        <div class="detail-item">
+                            <span class="detail-label">Interview Date:</span>
+                            <span class="detail-value">${formatDate(app.interviewDate)}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="application-progress">
+                        <div class="progress-title">Application Progress</div>
+                        <div class="progress-timeline">
+                            ${timelineSteps}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="application-card-footer">
+                    <div class="application-actions">
+                        <button class="action-btn action-btn-primary" onclick="viewApplicationDetails('${app.id}')">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+
+                        ${app.status === 'interview' ? `
+                        <button class="action-btn action-btn-light" onclick="viewInterviewDetails('${app.id}')">
+                            <i class="fas fa-video"></i> Interview
+                        </button>
+                        ` : ''}
+                    </div>
+                    <div class="days-ago">${daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`}</div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function generateTimelineSteps(app) {
+            const statusOrder = ['submitted', 'reviewed', 'interview', 'offer', 'hired', 'rejected'];
+            const currentStatusIndex = statusOrder.indexOf(app.status);
+
+            let timelineHTML = '';
+
+            statusOrder.forEach((status, index) => {
+                if (index <= currentStatusIndex) {
+                    const statusInfo = getStatusInfo(status);
+                    const step = app.statusHistory.find(h => h.status === status);
+                    const date = step ? formatDate(step.date) : '';
+                    const note = step ? step.note : '';
+
+                    const isCompleted = index < currentStatusIndex;
+                    const isCurrent = index === currentStatusIndex;
+
+                    timelineHTML += `
+                        <div class="timeline-step ${isCompleted ? 'completed' : ''} ${isCurrent ? 'current' : ''}">
+                            <div class="timeline-info">
+                                <h4>${statusInfo.text}</h4>
+                                ${date ? `<p>${date}</p>` : ''}
+                                ${note ? `<p>${note}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            return timelineHTML;
+        }
+
+        function getStatusInfo(status) {
+            const statusMap = {
+                pending: { text: 'Submitted', class: 'status-submitted' },
+                reviewed: { text: 'Under Review', class: 'status-reviewed' },
+                interview: { text: 'Interview', class: 'status-interview' },
+                offer: { text: 'Offer', class: 'status-offer' },
+                hired: { text: 'Hired', class: 'status-offer' },
+                rejected: { text: 'Rejected', class: 'status-rejected' }
+            };
+            return statusMap[status] || { text: 'Unknown', class: 'status-submitted' };
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function updateStats() {
+            // Calculate stats
+            const total = currentApplications.length;
+            const submitted = currentApplications.filter(app => app.status === 'submitted').length;
+            const reviewed = currentApplications.filter(app => app.status === 'reviewed').length;
+            const interview = currentApplications.filter(app => app.status === 'interview').length;
+            const offer = currentApplications.filter(app => app.status === 'offer').length;
+            const hired = currentApplications.filter(app => app.status === 'hired').length;
+            const rejected = currentApplications.filter(app => app.status === 'rejected').length;
+
+            // Update overview stats
+            statsOverview.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-icon total">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>${total}</h3>
+                            <p>Total Applications</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-icon pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>${submitted}</h3>
+                            <p>Pending Review</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-icon reviewed">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>${reviewed}</h3>
+                            <p>Under Review</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-icon interview">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>${interview}</h3>
+                            <p>Interview Stage</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-icon accepted">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>${offer}</h3>
+                            <p>Offers Received</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-icon rejected">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>${rejected}</h3>
+                            <p>Not Selected</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Update quick stats
+            const responseRate = total > 0 ? Math.round(((interview + offer + rejected) / total) * 100) : 0;
+            const offerRate = total > 0 ? Math.round((offer / total) * 100) : 0;
+            const avgResponseTime = 5; // In days - would be calculated from actual data
+
+            quickStats.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-label">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Response Rate</span>
+                    </div>
+                    <div class="stat-value">${responseRate}%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">
+                        <i class="fas fa-trophy"></i>
+                        <span>Offer Rate</span>
+                    </div>
+                    <div class="stat-value">${offerRate}%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">
+                        <i class="fas fa-clock"></i>
+                        <span>Avg. Response Time</span>
+                    </div>
+                    <div class="stat-value">${avgResponseTime} days</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">
+                        <i class="fas fa-calendar"></i>
+                        <span>Active Applications</span>
+                    </div>
+                    <div class="stat-value">${total - rejected}</div>
+                </div>
+            `;
+        }
+
+        function updateTimeline() {
+            // Get recent activities from all applications
+            let allActivities = [];
+
+            currentApplications.forEach(app => {
+                app.statusHistory.forEach(history => {
+                    allActivities.push({
+                        appId: app.id,
+                        jobTitle: app.jobTitle,
+                        company: app.company,
+                        type: history.status,
+                        date: history.date,
+                        note: history.note
+                    });
+                });
+            });
+
+            // Sort by date (newest first) and take latest 5
+            allActivities.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const recentActivities = allActivities.slice(0, 5);
+
+            // Update timeline feed
+            timelineFeed.innerHTML = '';
+
+            if (recentActivities.length === 0) {
+                timelineFeed.innerHTML = `
+                    <div style="text-align: center; color: var(--dark-gray); padding: 20px;">
+                        <i class="fas fa-history" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <p>No recent activity</p>
+                    </div>
+                `;
+                return;
+            }
+
+            recentActivities.forEach(activity => {
+                const timelineItem = createTimelineItem(activity);
+                timelineFeed.appendChild(timelineItem);
+            });
+        }
+
+        function createTimelineItem(activity) {
+            const item = document.createElement('div');
+            item.className = 'timeline-item';
+
+            const iconClass = getTimelineIconClass(activity.type);
+            const timeAgo = getTimeAgo(activity.date);
+
+            item.innerHTML = `
+                <div class="timeline-icon ${iconClass}">
+                    <i class="${getTimelineIcon(activity.type)}"></i>
+                </div>
+                <div class="timeline-content">
+                    <h4>${activity.note}</h4>
+                    <p>${activity.jobTitle} at ${activity.company}</p>
+                    <div class="timeline-time">${timeAgo}</div>
+                </div>
+            `;
+
+            return item;
+        }
+
+        function getTimelineIconClass(type) {
+            const iconMap = {
+                submitted: 'application',
+                reviewed: 'review',
+                interview: 'interview',
+                offer: 'offer',
+                rejected: 'application'
+            };
+            return iconMap[type] || 'application';
+        }
+
+        function getTimelineIcon(type) {
+            const iconMap = {
+                submitted: 'fas fa-paper-plane',
+                reviewed: 'fas fa-eye',
+                interview: 'fas fa-video',
+                offer: 'fas fa-award',
+                rejected: 'fas fa-times-circle'
+            };
+            return iconMap[type] || 'fas fa-file-alt';
+        }
+
+        function getTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) {
+                return 'Today';
+            } else if (diffDays === 1) {
+                return 'Yesterday';
+            } else if (diffDays < 7) {
+                return `${diffDays} days ago`;
+            } else if (diffDays < 30) {
+                const weeks = Math.floor(diffDays / 7);
+                return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
+            } else {
+                const months = Math.floor(diffDays / 30);
+                return `${months} ${months === 1 ? 'month' : 'months'} ago`;
+            }
+        }
+
+        function renderPagination(totalPages) {
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+
+            // Previous button
+            paginationHTML += `
+                <button class="pagination-btn ${currentPage === 1 ? 'disabled' : ''}"
+                        onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            `;
+
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            if (startPage > 1) {
+                paginationHTML += `<button class="pagination-btn" onclick="changePage(1)">1</button>`;
+                if (startPage > 2) {
+                    paginationHTML += `<span class="pagination-btn disabled">...</span>`;
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `
+                    <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+                        ${i}
+                    </button>
+                `;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    paginationHTML += `<span class="pagination-btn disabled">...</span>`;
+                }
+                paginationHTML += `<button class="pagination-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
+            }
+
+            // Next button
+            paginationHTML += `
+                <button class="pagination-btn ${currentPage === totalPages ? 'disabled' : ''}"
+                        onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+
+            pagination.innerHTML = paginationHTML;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(currentApplications.length / applicationsPerPage);
+            if (page < 1 || page > totalPages) return;
+
+            currentPage = page;
+            renderApplications();
+
+            // Scroll to top of applications list
+            window.scrollTo({
+                top: document.querySelector('.applications-container').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+
+        // Modal Functions
+        function viewApplicationDetails(appId) {
+            const app = applicationsData.find(a => a.id === appId);
+            if (!app) return;
+
+            const statusInfo = getStatusInfo(app.status);
+
+            let detailsHTML = `
+                <div style="margin-bottom: 25px;">
+                    <h3 style="margin-bottom: 10px; color: var(--dark);">${app.jobTitle}</h3>
+                    <div style="color: var(--primary); font-weight: 600; margin-bottom: 15px;">
+                        <i class="fas fa-building"></i> ${app.company}
+                    </div>
+                    <div style="background: ${statusInfo.class === 'status-submitted' ? 'rgba(255, 158, 0, 0.1)' :
+                                       statusInfo.class === 'status-reviewed' ? 'rgba(23, 162, 184, 0.1)' :
+                                       statusInfo.class === 'status-interview' ? 'rgba(76, 201, 240, 0.1)' :
+                                       statusInfo.class === 'status-offer' ? 'rgba(56, 176, 0, 0.1)' :
+                                       'rgba(255, 107, 107, 0.1)'};
+                         padding: 10px 15px; border-radius: 8px; display: inline-block;">
+                        <span style="font-weight: 600; color: ${statusInfo.class === 'status-submitted' ? 'var(--warning)' :
+                                                       statusInfo.class === 'status-reviewed' ? 'var(--info)' :
+                                                       statusInfo.class === 'status-interview' ? 'var(--secondary)' :
+                                                       statusInfo.class === 'status-offer' ? 'var(--success)' :
+                                                       'var(--danger)'};">${statusInfo.text}</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                    <div>
+                        <h4 style="margin-bottom: 10px; color: var(--dark);">Application Details</h4>
+                        <div style="background: var(--light-gray); padding: 15px; border-radius: 8px;">
+                            <div style="margin-bottom: 10px;">
+                                <strong>Application ID:</strong> ${app.id}
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Applied Date:</strong> ${formatDate(app.appliedDate)}
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Location:</strong> ${app.location}
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Job Type:</strong> ${app.type}
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>Department:</strong> ${app.department}
+                            </div>
+                            <div>
+                                <strong>Salary Range:</strong> ${app.salary}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="margin-bottom: 10px; color: var(--dark);">Next Steps</h4>
+                        <div style="background: ${app.status === 'offer' ? 'rgba(56, 176, 0, 0.1)' : 'rgba(67, 97, 238, 0.1)'};
+                             padding: 15px; border-radius: 8px;">
+                            <p style="margin-bottom: 10px; font-weight: 600; color: ${app.status === 'offer' ? 'var(--success)' : 'var(--primary)'};">${app.nextStep}</p>
+                            ${app.interviewDate ? `
+                            <p style="margin-bottom: 5px;"><strong>Interview Date:</strong> ${formatDate(app.interviewDate)}</p>
+                            ` : ''}
+                            ${app.interviewType ? `
+                            <p style="margin-bottom: 5px;"><strong>Interview Type:</strong> ${app.interviewType}</p>
+                            ` : ''}
+                            ${app.contactPerson ? `
+                            <p style="margin-bottom: 5px;"><strong>Contact Person:</strong> ${app.contactPerson}</p>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 10px; color: var(--dark);">Application Materials</h4>
+                    <div style="background: var(--light-gray); padding: 15px; border-radius: 8px;">
+                        <div style="margin-bottom: 10px;">
+                            <i class="fas fa-file-pdf" style="color: var(--danger); margin-right: 8px;"></i>
+                            <strong>Resume:</strong> ${app.applicationMaterials.resume}
+                        </div>
+                        ${app.applicationMaterials.coverLetter ? `
+                        <div style="margin-bottom: 10px;">
+                            <i class="fas fa-file-alt" style="color: var(--primary); margin-right: 8px;"></i>
+                            <strong>Cover Letter:</strong> ${app.applicationMaterials.coverLetter}
+                        </div>
+                        ` : ''}
+                        ${app.applicationMaterials.portfolio ? `
+                        <div>
+                            <i class="fas fa-folder" style="color: var(--warning); margin-right: 8px;"></i>
+                            <strong>Portfolio:</strong> ${app.applicationMaterials.portfolio}
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                ${app.offerDetails ? `
+                <div style="margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 10px; color: var(--dark);">Offer Details</h4>
+                    <div style="background: rgba(56, 176, 0, 0.1); padding: 15px; border-radius: 8px; border-left: 4px solid var(--success);">
+                        <div style="margin-bottom: 10px;">
+                            <strong>Salary:</strong> ${app.offerDetails.salary}
+                        </div>
+                        ${app.offerDetails.bonus ? `
+                        <div style="margin-bottom: 10px;">
+                            <strong>Bonus:</strong> ${app.offerDetails.bonus}
+                        </div>
+                        ` : ''}
+                        ${app.offerDetails.benefits ? `
+                        <div>
+                            <strong>Benefits:</strong> ${app.offerDetails.benefits}
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+                ` : ''}
+
+                ${app.notes ? `
+                <div style="margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 10px; color: var(--dark);">Notes</h4>
+                    <div style="background: var(--light-gray); padding: 15px; border-radius: 8px;">
+                        ${app.notes}
+                    </div>
+                </div>
+                ` : ''}
+            `;
+
+            document.getElementById('applicationDetailsContent').innerHTML = detailsHTML;
+
+            // Set view job button
+            const viewJobBtn = document.getElementById('viewJobBtn');
+            viewJobBtn.onclick = () => {
+                window.location.href = `/job-details/${app.jobId}/`;
+            };
+
+            // Show modal
+            document.getElementById('applicationDetailsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function withdrawApplication(appId, jobTitle, company) {
+            currentWithdrawAppId = appId;
+            document.getElementById('withdrawJobTitle').textContent = jobTitle;
+            document.getElementById('withdrawCompany').textContent = company;
+            document.getElementById('withdrawModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function confirmWithdraw() {
+            if (!currentWithdrawAppId) return;
+
+            // In a real application, this would make an API call to withdraw the application
+            showNotification('Application withdrawn successfully', 'success');
+
+            // Remove from local data (for demo purposes)
+            const index = applicationsData.findIndex(app => app.id === currentWithdrawAppId);
+            if (index !== -1) {
+                applicationsData.splice(index, 1);
+            }
+
+            // Update filters and render
+            applyFilters();
+            updateStats();
+            updateTimeline();
+
+            closeModal();
+            currentWithdrawAppId = null;
+        }
+
+        function viewInterviewDetails(appId) {
+            const app = applicationsData.find(a => a.id === appId);
+            if (!app || !app.interviewDate) return;
+
+            alert(`Interview Details for ${app.jobTitle}:\n\nDate: ${formatDate(app.interviewDate)}\nType: ${app.interviewType || 'Interview'}\nContact: ${app.contactPerson || 'Not specified'}\n\n${app.notes || 'No additional notes.'}`);
+        }
+
+        function closeModal() {
+            document.getElementById('applicationDetailsModal').style.display = 'none';
+            document.getElementById('withdrawModal').style.display = 'none';
+            document.body.style.overflow = '';
+            currentWithdrawAppId = null;
+        }
+
+        function showNotification(message, type = 'success') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '100px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px 25px';
+            notification.style.borderRadius = '10px';
+            notification.style.boxShadow = 'var(--shadow-lg)';
+            notification.style.zIndex = '3000';
+            notification.style.transition = 'all 0.3s ease';
+            notification.style.fontWeight = '600';
+
+            if (type === 'success') {
+                notification.style.background = 'var(--success)';
+                notification.style.color = 'white';
+            } else {
+                notification.style.background = 'var(--danger)';
+                notification.style.color = 'white';
+            }
+
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Header functionality
+        function setupHeader() {
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+            function openMobileMenu() {
+                mobileMenu.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            mobileMenuBtn.addEventListener('click', openMobileMenu);
+            closeMenuBtn.addEventListener('click', closeMobileMenu);
+            mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+            // Close mobile menu when clicking on a link
+            const mobileLinks = document.querySelectorAll('.mobile-menu-links a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // Close modals when clicking outside
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal();
+                    }
+                });
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

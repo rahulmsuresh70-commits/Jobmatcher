@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | JobMatcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --primary-light: #4895ef;
+            --secondary: #4cc9f0;
+            --success: #38b000;
+            --danger: #e63946;
+            --warning: #ff9e00;
+            --light: #ffffff;
+            --light-gray: #f8f9fa;
+            --gray: #adb5bd;
+            --dark-gray: #6c757d;
+            --dark: #212529;
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #4361ee 0%, #4895ef 100%);
+            --gradient-dark: linear-gradient(135deg, #212529 0%, #343a40 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(76, 201, 240, 0.05) 0%, transparent 20%);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Login Wrapper */
+        .login-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Left Panel - Form */
+        .form-panel {
+            background: white;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 40px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        /* Form Header */
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .form-header h1 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+        }
+
+        .form-header p a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-header p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Tabs */
+        .login-tabs {
+            display: flex;
+            gap: 5px;
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--dark-gray);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: var(--transition);
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+        }
+
+        .tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Form Styles */
+        .login-form {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 15px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: var(--dark);
+            background: white;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger);
+        }
+
+        .form-input.success {
+            border-color: var(--success);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .form-input:focus + .input-icon {
+            color: var(--primary);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 14px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            display: none;
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-input:focus ~ .password-toggle {
+            color: var(--primary);
+        }
+
+        /* Remember & Forgot */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .remember-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .remember-text {
+            font-size: 15px;
+            color: var(--dark);
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .btn {
+            padding: 16px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-primary:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .divider:before, .divider:after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e9ecef;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: var(--dark-gray);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Social Login */
+        .social-login {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            background: white;
+            color: var(--dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .social-btn.google {
+            color: #DB4437;
+        }
+
+        .social-btn.linkedin {
+            color: #0077B5;
+        }
+
+        .social-btn.github {
+            color: #333;
+        }
+
+        /* Registration Links */
+        .registration-links {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .registration-option {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: var(--transition);
+        }
+
+        .registration-option:hover {
+            background: rgba(67, 97, 238, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .registration-option:last-child {
+            margin-bottom: 0;
+        }
+
+        .registration-option h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .registration-option p {
+            font-size: 14px;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+        }
+
+        .btn-outline {
+            padding: 10px 20px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Right Panel - Info */
+        .info-panel {
+            background: var(--gradient-dark);
+            padding: 60px 50px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-panel:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .info-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-header {
+            margin-bottom: 40px;
+        }
+
+        .info-header h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .info-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .features-list {
+            margin-bottom: 50px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .feature-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .feature-content p {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .stats-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .stats-header h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* User Type Indicator */
+        .user-type-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .login-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .info-panel {
+                display: none;
+            }
+
+            .form-panel {
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .social-login {
+                grid-template-columns: 1fr;
+            }
+
+            .form-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-panel {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .form-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .login-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            <!-- Left Panel - Login Form -->
+            <div class="form-panel">
+                <!-- Logo -->
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    JobMatcher
+                </a>
+
+                <!-- Form Header -->
+                <div class="form-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to your account to continue your job search or manage your company</p>
+                </div>
+
+                <!-- Login Tabs -->
+
+                <!-- Job Seeker Login Form -->
+                <form class="login-form active" id="jobseekerForm" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="form-label" for="jobseekerEmail">Email Address</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="jobseekerEmail" name="email" class="form-input" placeholder="you@example.com" required>
+                            <i class="fas fa-envelope input-icon"></i>
+                        </div>
+                        <div class="error-message" id="jobseekerEmailError">
+                            <i class="fas fa-exclamation-circle"></i> Please enter a valid email address
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="jobseekerPassword">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="jobseekerPassword" name="password" class="form-input" placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle" id="jobseekerPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="jobseekerPasswordError">
+                            <i class="fas fa-exclamation-circle"></i> Please enter your password
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberJobseeker" class="remember-checkbox">
+                            <label for="rememberJobseeker" class="remember-text">Remember me</label>
+                        </div>
+                        <a href="/email/" class="forgot-password">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="jobseekerSubmitBtn">
+                        <span id="jobseekerBtnText">Sign In as Job Seeker</span>
+                        <div class="loading-spinner" id="jobseekerLoadingSpinner"></div>
+                        <i class="fas fa-arrow-right" id="jobseekerBtnIcon"></i>
+                    </button>
+                </form>
+
+                <!-- Company Login Form -->
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span>Or continue with</span>
+                </div>
+
+                <!-- Social Login -->
+                <div class="social-login">
+                    <button type="button" class="social-btn google">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="social-btn linkedin">
+                        <i class="fab fa-linkedin-in"></i> LinkedIn
+                    </button>
+                    <button type="button" class="social-btn github">
+                        <i class="fab fa-github"></i> GitHub
+                    </button>
+                </div>
+
+                <!-- Registration Links -->
+                <div class="registration-links">
+                    <div class="registration-option">
+                        <h4>Looking for a job?</h4>
+                        <p>Create a free account to find your dream job with AI-powered matching.</p>
+                        <a href="/register/" class="btn-outline">
+                            <i class="fas fa-user-plus"></i> Sign Up as Job Seeker
+                        </a>
+                    </div>
+
+                    <div class="registration-option">
+                        <h4>Hiring talent?</h4>
+                        <p>Register your company to post jobs and find qualified candidates.</p>
+                        <a href="/company-register/" class="btn-outline">
+                            <i class="fas fa-building"></i> Register Your Company
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Info -->
+            <div class="info-panel">
+                <div class="info-content">
+                    <div class="info-header">
+                        <h2>Find Your Perfect Match</h2>
+                        <p>Join thousands of professionals and companies using JobMatcher</p>
+                    </div>
+
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>AI-Powered Matching</h4>
+                                <p>Our intelligent algorithm connects job seekers with the most relevant opportunities.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Quick Apply</h4>
+                                <p>Apply to multiple jobs with one click using your pre-filled profile.</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Advanced Analytics</h4>
+                                <p>Companies get detailed insights into their hiring process and candidate pipeline.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-card">
+                        <div class="stats-header">
+                            <h4>JobMatcher by Numbers</h4>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat">
+                                <div class="stat-value">50K+</div>
+                                <div class="stat-label">Job Seekers</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">10K+</div>
+                                <div class="stat-label">Companies</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">95%</div>
+                                <div class="stat-label">Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const tabs = document.querySelectorAll('.tab');
+        const jobseekerForm = document.getElementById('jobseekerForm');
+
+        // Job Seeker Elements
+        const jobseekerEmail = document.getElementById('jobseekerEmail');
+        const jobseekerPassword = document.getElementById('jobseekerPassword');
+        const jobseekerSubmitBtn = document.getElementById('jobseekerSubmitBtn');
+        const jobseekerBtnText = document.getElementById('jobseekerBtnText');
+        const jobseekerBtnIcon = document.getElementById('jobseekerBtnIcon');
+        const jobseekerLoadingSpinner = document.getElementById('jobseekerLoadingSpinner');
+        const jobseekerPasswordToggle = document.getElementById('jobseekerPasswordToggle');
+
+        // Company Elements
+
+        // Error Messages
+        const jobseekerEmailError = document.getElementById('jobseekerEmailError');
+        const jobseekerPasswordError = document.getElementById('jobseekerPasswordError');
+
+        // Initialize
+        function init() {
+            hideAllErrors();
+            setupEventListeners();
+            setupPasswordToggles();
+            setupSocialLogin();
+        }
+
+        function hideAllErrors() {
+            jobseekerEmailError.style.display = 'none';
+            jobseekerPasswordError.style.display = 'none';
+        }
+
+        function setupEventListeners() {
+            // Job seeker form submission
+            jobseekerForm.addEventListener('submit', handleJobseekerSubmit);
+
+            // Company form submission
+
+            // Real-time validation
+            jobseekerEmail.addEventListener('input', () => validateEmail(jobseekerEmail, jobseekerEmailError));
+            jobseekerPassword.addEventListener('input', () => validatePassword(jobseekerPassword, jobseekerPasswordError));
+        }
+
+
+        function setupPasswordToggles() {
+            jobseekerPasswordToggle.addEventListener('click', () => togglePasswordVisibility(jobseekerPassword, jobseekerPasswordToggle));
+        }
+
+        function setupSocialLogin() {
+            document.querySelectorAll('.social-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const provider = this.querySelector('i').className.includes('google') ? 'Google' :
+                                   this.querySelector('i').className.includes('linkedin') ? 'LinkedIn' : 'GitHub';
+
+                    const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
+                    const userType = activeTab === 'jobseeker' ? 'Job Seeker' : 'Company';
+
+                    alert(`Would initiate ${provider} OAuth login for ${userType}.\n\nIn production, this would use Django packages like django-allauth.`);
+                });
+            });
+        }
+
+        function validateEmail(emailInput, errorElement) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (emailInput.value.trim() === '') {
+                emailInput.classList.add('error');
+                emailInput.classList.remove('success');
+                errorElement.textContent = 'Email address is required';
+                errorElement.style.display = 'flex';
+                return false;
+            } else if (!emailRegex.test(emailInput.value)) {
+                emailInput.classList.add('error');
+                emailInput.classList.remove('success');
+                errorElement.textContent = 'Please enter a valid email address';
+                errorElement.style.display = 'flex';
+                return false;
+            } else {
+                emailInput.classList.remove('error');
+                emailInput.classList.add('success');
+                errorElement.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validatePassword(passwordInput, errorElement) {
+            if (passwordInput.value.trim() === '') {
+                passwordInput.classList.add('error');
+                passwordInput.classList.remove('success');
+                errorElement.textContent = 'Password is required';
+                errorElement.style.display = 'flex';
+                return false;
+            } else {
+                passwordInput.classList.remove('error');
+                passwordInput.classList.add('success');
+                errorElement.style.display = 'none';
+                return true;
+            }
+        }
+
+        function handleJobseekerSubmit(e) {
+            e.preventDefault();
+
+            const isEmailValid = validateEmail(jobseekerEmail, jobseekerEmailError);
+            const isPasswordValid = validatePassword(jobseekerPassword, jobseekerPasswordError);
+
+            if (!isEmailValid || !isPasswordValid) {
+                return;
+            }
+
+            // Show loading state
+            jobseekerBtnText.textContent = 'Signing In...';
+            jobseekerBtnIcon.style.display = 'none';
+            jobseekerLoadingSpinner.style.display = 'inline-block';
+            jobseekerSubmitBtn.disabled = true;
+
+            // Simulate API call to Django backend
+                jobseekerForm.submit();
+            setTimeout(() => {
+                // Hide loading state
+                jobseekerLoadingSpinner.style.display = 'none';
+                jobseekerBtnIcon.style.display = 'inline-block';
+                jobseekerBtnText.textContent = 'Sign In as Job Seeker';
+                jobseekerSubmitBtn.disabled = false;
+
+                // For demo purposes - show success message
+                // In real app, this would redirect to dashboard
+                showSuccessMessage('jobseeker', jobseekerEmail.value.split('@')[0]);
+            }, 2000);
+        }
+
+        function showSuccessMessage(userType, username) {
+            const successHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px;">
+                    <div style="background: white; border-radius: 16px; padding: 40px; text-align: center; max-width: 500px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                        <div style="width: 80px; height: 80px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px;">
+                            <i class="fas fa-check" style="color: white; font-size: 36px;"></i>
+                        </div>
+                        <h2 style="margin-bottom: 15px; color: var(--dark);">Welcome Back, ${username}!</h2>
+                        <p style="color: var(--dark-gray); margin-bottom: 25px; line-height: 1.6;">
+                            You have successfully signed in as a <strong>${userType === 'jobseeker' ? 'Job Seeker' : 'Company Admin'}</strong>.
+                        </p>
+
+                        <div style="background: rgba(67, 97, 238, 0.05); border-radius: 12px; padding: 20px; margin-bottom: 30px; text-align: left;">
+                            <h4 style="margin-bottom: 15px; color: var(--primary);">Quick Actions:</h4>
+                            <ul style="padding-left: 20px; color: var(--dark-gray);">
+                                ${userType === 'jobseeker'
+                                    ? `<li>Check your job matches</li>
+                                       <li>Complete your profile</li>
+                                       <li>Apply to new opportunities</li>`
+                                    : `<li>View job applications</li>
+                                       <li>Post a new job</li>
+                                       <li>Check analytics dashboard</li>`
+                                }
+                            </ul>
+                        </div>
+
+                        <div style="display: flex; gap: 15px;">
+                            <button id="goToDashboard" style="flex: 1; padding: 14px 20px; background: var(--gradient-primary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                            </button>
+                            ${userType === 'jobseeker'
+                                ? `<button id="browseJobs" style="flex: 1; padding: 14px 20px; background: transparent; color: var(--primary); border: 2px solid var(--primary); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                    <i class="fas fa-search"></i> Browse Jobs
+                                  </button>`
+                                : `<button id="postJob" style="flex: 1; padding: 14px 20px; background: transparent; color: var(--primary); border: 2px solid var(--primary); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                    <i class="fas fa-plus"></i> Post a Job
+                                  </button>`
+                            }
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const successDiv = document.createElement('div');
+            successDiv.innerHTML = successHTML;
+            document.body.appendChild(successDiv);
+
+            // Add event listeners to success buttons
+            setTimeout(() => {
+                document.getElementById('goToDashboard').addEventListener('click', () => {
+                    alert(`Redirecting to ${userType === 'jobseeker' ? 'job seeker' : 'company'} dashboard...\n\nIn production, this would redirect to the appropriate dashboard.`);
+                });
+
+                const actionBtn = document.getElementById(userType === 'jobseeker' ? 'browseJobs' : 'postJob');
+                if (actionBtn) {
+                    actionBtn.addEventListener('click', () => {
+                        alert(`Redirecting to ${userType === 'jobseeker' ? 'job search' : 'post job'} page...`);
+                    });
+                }
+            }, 100);
+        }
+
+        function togglePasswordVisibility(passwordField, toggleButton) {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+
+            const icon = toggleButton.querySelector('i');
+            if (type === 'text') {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Initialize the login page
+        init();
+    </script>
+{% if msg %}
+<script>alert('{{msg}}')</script>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Approval | JobMatcher Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a237e;
+            --primary-dark: #0d1568;
+            --primary-light: #283593;
+            --secondary: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --info: #2196f3;
+            --light: #ffffff;
+            --light-gray: #f5f5f5;
+            --gray: #9e9e9e;
+            --dark-gray: #616161;
+            --dark: #212121;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-admin: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Admin Layout */
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--gradient-admin);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .admin-logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-section {
+            margin-bottom: 30px;
+        }
+
+        .menu-title {
+            padding: 0 25px 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+        }
+
+        .menu-items {
+            list-style: none;
+        }
+
+        .menu-item {
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: flex;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left-color: var(--secondary);
+        }
+
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-left-color: var(--secondary);
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .menu-badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: var(--transition);
+        }
+
+        /* Header */
+        .admin-header {
+            height: var(--header-height);
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            color: var(--dark);
+        }
+
+        .header-left p {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            width: 300px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 30px;
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h2 {
+            font-size: 28px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: var(--dark-gray);
+            font-size: 15px;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(26, 35, 126, 0.1);
+        }
+
+        /* Filters */
+        .filters-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .filters-header h3 {
+            font-size: 18px;
+            color: var(--dark);
+        }
+
+        .filter-reset {
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .filter-input, .filter-select {
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .filter-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+
+        /* Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border-top: 4px solid var(--primary);
+        }
+
+        .stat-card.pending {
+            border-top-color: var(--warning);
+        }
+
+        .stat-card.approved {
+            border-top-color: var(--success);
+        }
+
+        .stat-card.rejected {
+            border-top-color: var(--danger);
+        }
+
+        .stat-card.total {
+            border-top-color: var(--info);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        /* Company Cards */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+        }
+
+        .company-header-left {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .company-logo img {
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            background: #fff;
+        }
+
+        .company-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .company-card.pending {
+            border-left: 4px solid var(--warning);
+        }
+
+        .company-card.approved {
+            border-left: 4px solid var(--success);
+        }
+
+        .company-card.rejected {
+            border-left: 4px solid var(--danger);
+        }
+
+        .card-header {
+            padding: 25px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .company-info {
+            flex: 1;
+        }
+
+        .company-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-pending {
+            background: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-approved {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+
+        .badge-rejected {
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--danger);
+        }
+
+        .company-industry {
+            color: var(--dark-gray);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .company-date {
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .company-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .modal-company-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-company-logo img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            background: #fff;
+        }
+
+        .modal-company-basic h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-company-basic small {
+            color: #6b7280;
+        }
+
+
+        .detail-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-group p {
+            font-size: 15px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .company-description {
+            margin-bottom: 25px;
+        }
+
+        .description-label {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .description-text {
+            font-size: 14px;
+            color: var(--dark);
+            line-height: 1.6;
+            background: var(--light-gray);
+            padding: 15px;
+            border-radius: 8px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .admin-actions {
+            padding: 20px 25px;
+            background: var(--light-gray);
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 25px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark-gray);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--light-gray);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-textarea {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            transition: var(--transition);
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--gray);
+            font-size: 32px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .companies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .companies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-area {
+                padding: 20px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .company-details {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-actions {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+
+            .action-buttons {
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(26, 35, 126, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="admin-logo">
+                    <div class="admin-logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>JobMatcher Admin</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <div class="menu-title">Main</div>
+                    <ul class="menu-items">
+                        <a href="/adminp/" class="menu-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="/users/" class="menu-item">
+                            <i class="fas fa-users"></i>
+                            <span>Users</span>
+                        </a>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-title">Management</div>
+                    <ul class="menu-items">
+                        <a href="/new-companies/" class="menu-item active">
+                            <i class="fas fa-building"></i>
+                            <span>New Companies</span>
+                        </a>
+                        <a href="/companies/" class="menu-item">
+                            <i class="fas fa-building"></i>
+                            <span>Companies</span>
+                        </a>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-title">System</div>
+                    <ul class="menu-items">
+                        <a href="/" class="menu-item">
+                            <i class="fas fa-home"></i>
+                            <span>Logout</span>
+                        </a>
+                    </ul>
+                </div>
+
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1>Company Approvals</h1>
+                    <p>Review and approve new company registrations</p>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search companies..." id="searchInput">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title">
+                        <h2>Pending Company Registrations</h2>
+                        <p>8 companies waiting for approval</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="exportBtn">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button class="btn btn-outline" id="refreshBtn">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+
+
+                <!-- Filters -->
+                <div class="filters-section">
+                    <div class="filters-header">
+                        <h3>Filters</h3>
+                        <button class="filter-reset" id="resetFilters">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label class="filter-label">Status</label>
+                            <select class="filter-select" id="statusFilter">
+                                <option value="all">All Status</option>
+                                <option value="pending" selected>Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Industry</label>
+                            <select class="filter-select" id="industryFilter">
+                                <option value="all">All Industries</option>
+                                <option value="technology">Technology</option>
+                                <option value="finance">Finance</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="education">Education</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Company Size</label>
+                            <select class="filter-select" id="sizeFilter">
+                                <option value="all">All Sizes</option>
+                                <option value="1-10">1-10 employees</option>
+                                <option value="11-50">11-50 employees</option>
+                                <option value="51-200">51-200 employees</option>
+                                <option value="201-500">201-500 employees</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Registration Date</label>
+                            <input type="date" class="filter-input" id="dateFilter">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Companies Grid -->
+                <div class="companies-grid" id="companiesGrid">
+                    <!-- Company Card Template -->
+                    <div class="company-card pending" data-company-id="1">
+                        <div class="card-header">
+                            <div class="company-info">
+                                <div class="company-name">
+                                    TechCorp Solutions
+                                    <span class="company-badge badge-pending">Pending</span>
+                                </div>
+                                <div class="company-industry">
+                                    <i class="fas fa-industry"></i> Technology • 51-200 employees
+                                </div>
+                                <div class="company-date">
+                                    <i class="far fa-calendar"></i> Registered: 2024-01-15
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="company-details">
+                                <div class="detail-group">
+                                    <label>Company Email</label>
+                                    <p>contact@techcorp.com</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Phone</label>
+                                    <p>+1 (555) 123-4567</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Website</label>
+                                    <p>https://techcorp.com</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Admin Name</label>
+                                    <p>John Smith</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Admin Email</label>
+                                    <p>john@techcorp.com</p>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Admin Rights</label>
+                                    <p>New Company</p>
+                                </div>
+                            </div>
+
+                            <div class="company-description">
+                                <div class="description-label">Company Description</div>
+                                <div class="description-text">
+                                    TechCorp Solutions is a leading provider of innovative software solutions for businesses. We specialize in custom CRM development, cloud infrastructure, and AI-powered analytics tools. Our team of 150+ engineers and developers work with enterprises across various industries.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="admin-actions">
+                            <div class="action-notes">
+                                <small style="color: var(--dark-gray); font-size: 13px;">
+                                    <i class="far fa-clock"></i> Waiting for review (3 days)
+                                </small>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-success btn-sm approve-btn" data-company-id="1">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-danger btn-sm reject-btn" data-company-id="1">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                                <button class="btn btn-outline btn-sm view-btn" data-company-id="1">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More company cards will be dynamically loaded -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Reject Modal -->
+    <div class="modal-overlay" id="rejectModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Reject Company Registration</h3>
+                <button class="modal-close" id="closeRejectModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="rejectForm">
+                    <div class="form-group">
+                        <label class="form-label">Company</label>
+                        <input type="text" class="filter-input" id="rejectCompanyName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Reason for Rejection</label>
+                        <textarea class="form-textarea" id="rejectReason" placeholder="Please provide a reason for rejecting this company registration..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Confirm Rejection
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Company Modal -->
+    <div class="modal-overlay" id="viewModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Company Details</h3>
+                <button class="modal-close" id="closeViewModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-company-header">
+                    <div class="modal-company-logo">
+                        <img id="viewCompanyLogo"
+                             src="/static/img/default-company.png"
+                             alt="Company Logo">
+                    </div>
+
+                    <div class="modal-company-basic">
+                        <h4 id="viewCompanyNameHeader">-</h4>
+                        <small id="viewIndustryHeader">-</small>
+                    </div>
+                </div>
+                <div class="company-details" style="grid-template-columns: 1fr 1fr; margin-bottom: 0;">
+                    <div class="detail-group">
+                        <label>Company Name</label>
+                        <p id="viewCompanyName">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Industry</label>
+                        <p id="viewIndustry">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Company Email</label>
+                        <p id="viewCompanyEmail">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Company Phone</label>
+                        <p id="viewCompanyPhone">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Website</label>
+                        <p id="viewWebsite">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Company Size</label>
+                        <p id="viewSize">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Admin First Name</label>
+                        <p id="viewFname">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Admin Last Name</label>
+                        <p id="viewLname">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Admin Email</label>
+                        <p id="viewAdminEmail">-</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Admin Rights</label>
+                        <p id="viewRights">-</p>
+                    </div>
+                    <div class="detail-group" style="grid-column: 1 / -1;">
+                        <label>Registration Date</label>
+                        <p id="viewDate">-</p>
+                    </div>
+                </div>
+
+                <div class="company-description" style="margin-top: 20px;">
+                    <div class="description-label">Company Description</div>
+                    <div class="description-text" id="viewDescription" style="min-height: 80px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Company Data
+        const companiesData = [
+            {% for i in companies %}
+            {
+                id: {{i.id}},
+                company_name: "{{i.company_name}}",
+                company_email: "{{i.company_email}}",
+                company_phone: "{{i.company_phone}}",
+                website: "{{i.website}}",
+                logo: "{{i.logo.url}}",
+                size: "{{i.size}}",
+                industry: "{{i.industry}}",
+                description: `{{i.description}}`,
+                fname: "{{i.fname}}",
+                lname: "{{i.lname}}",
+                email: "{{i.email}}",
+                password: "{{i.password}}",
+                rights: "New Company",
+                date: "{{i.date}}",
+                status: "pending"
+            },
+        {% endfor %}
+
+        ];
+
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const companiesGrid = document.getElementById('companiesGrid');
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const industryFilter = document.getElementById('industryFilter');
+        const sizeFilter = document.getElementById('sizeFilter');
+        const dateFilter = document.getElementById('dateFilter');
+        const resetFilters = document.getElementById('resetFilters');
+        const exportBtn = document.getElementById('exportBtn');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const rejectModal = document.getElementById('rejectModal');
+        const viewModal = document.getElementById('viewModal');
+        const closeRejectModal = document.getElementById('closeRejectModal');
+        const closeViewModal = document.getElementById('closeViewModal');
+        const rejectForm = document.getElementById('rejectForm');
+        const rejectCompanyName = document.getElementById('rejectCompanyName');
+        const rejectReason = document.getElementById('rejectReason');
+
+        // Initialize
+        function init() {
+            renderCompanies(companiesData);
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992 &&
+                    !sidebar.contains(e.target) &&
+                    e.target !== mobileMenuBtn &&
+                    !mobileMenuBtn.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // Search input
+            searchInput.addEventListener('input', filterCompanies);
+
+            // Filter changes
+            statusFilter.addEventListener('change', filterCompanies);
+            industryFilter.addEventListener('change', filterCompanies);
+            sizeFilter.addEventListener('change', filterCompanies);
+            dateFilter.addEventListener('change', filterCompanies);
+
+            // Reset filters
+            resetFilters.addEventListener('click', () => {
+                searchInput.value = '';
+                statusFilter.value = 'pending';
+                industryFilter.value = 'all';
+                sizeFilter.value = 'all';
+                dateFilter.value = '';
+                filterCompanies();
+            });
+
+            // Export button
+            exportBtn.addEventListener('click', () => {
+                alert('Exporting company data to CSV...');
+                // In production, this would generate and download a CSV file
+            });
+
+            // Refresh button
+            refreshBtn.addEventListener('click', () => {
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Refreshing...';
+                setTimeout(() => {
+                    // Simulate API refresh
+                    refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+                    alert('Company data refreshed!');
+                }, 1000);
+            });
+
+            // Close modals when clicking outside
+            document.addEventListener('click', (e) => {
+                if (e.target === rejectModal) {
+                    closeModal('rejectModal');
+                }
+                if (e.target === viewModal) {
+                    closeModal('viewModal');
+                }
+            });
+
+            // Close modal buttons
+            closeRejectModal.addEventListener('click', () => closeModal('rejectModal'));
+            closeViewModal.addEventListener('click', () => closeModal('viewModal'));
+
+            // Reject form submission
+            rejectForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const companyId = this.getAttribute('data-company-id');
+                const reason = rejectReason.value;
+
+                // In production, this would send to Django backend
+                alert(`Company ${companyId} rejected. Reason: ${reason}`);
+                window.location.href=`/manage-company/${companyId}/Rejected/`;
+                // Update company status
+                const companyIndex = companiesData.findIndex(c => c.id == companyId);
+                if (companyIndex !== -1) {
+                    companiesData[companyIndex].status = 'rejected';
+                    renderCompanies(companiesData);
+                }
+
+                closeModal('rejectModal');
+                rejectForm.reset();
+            });
+        }
+
+        function renderCompanies(companies) {
+            companiesGrid.innerHTML = '';
+
+            if (companies.length === 0) {
+                companiesGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>No Companies Found</h3>
+                        <p>Try adjusting your filters or search criteria</p>
+                        <button class="btn btn-outline" id="resetFiltersBtn">
+                            <i class="fas fa-redo"></i> Reset Filters
+                        </button>
+                    </div>
+                `;
+                document.getElementById('resetFiltersBtn')?.addEventListener('click', () => {
+                    resetFilters.click();
+                });
+                return;
+            }
+
+            companies.forEach(company => {
+                const card = createCompanyCard(company);
+                companiesGrid.appendChild(card);
+            });
+
+            // Update stats
+            updateStats(companies);
+        }
+
+        function createCompanyCard(company) {
+            const card = document.createElement('div');
+            card.className = `company-card ${company.status}`;
+            card.setAttribute('data-company-id', company.id);
+
+            const statusBadge = {
+                pending: 'Pending',
+                approved: 'Approved',
+                rejected: 'Rejected'
+            }[company.status];
+
+            const badgeClass = {
+                pending: 'badge-pending',
+                approved: 'badge-approved',
+                rejected: 'badge-rejected'
+            }[company.status];
+
+            const daysAgo = Math.floor(Math.random() * 5) + 1;
+
+            card.innerHTML = `
+    <div class="card-header">
+        <div class="company-header-left">
+            <div class="company-logo">
+                <img src="${company.logo}" alt="${company.company_name} logo"
+                     onerror="this.src='/static/img/default-company.png'">
+            </div>
+
+            <div class="company-info">
+                <div class="company-name">
+                    ${company.company_name}
+                    <span class="company-badge ${badgeClass}">${statusBadge}</span>
+                </div>
+
+                <div class="company-industry">
+                    <i class="fas fa-industry"></i> ${company.industry} • ${company.size}
+                </div>
+
+                <div class="company-date">
+                    <i class="far fa-calendar"></i> Registered: ${company.date}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="company-details">
+            <div class="detail-group">
+                <label>Company Email</label>
+                <p>${company.company_email}</p>
+            </div>
+            <div class="detail-group">
+                <label>Phone</label>
+                <p>${company.company_phone}</p>
+            </div>
+            <div class="detail-group">
+                <label>Website</label>
+                <p>
+                    <a href="${company.website}" target="_blank">
+                        ${company.website}
+                    </a>
+                </p>
+            </div>
+            <div class="detail-group">
+                <label>Admin Name</label>
+                <p>${company.fname} ${company.lname}</p>
+            </div>
+            <div class="detail-group">
+                <label>Admin Email</label>
+                <p>${company.email}</p>
+            </div>
+            <div class="detail-group">
+                <label>Admin Rights</label>
+                <p>${company.rights}</p>
+            </div>
+        </div>
+
+        <div class="company-description">
+            <div class="description-label">Company Description</div>
+            <div class="description-text">
+                ${company.description}
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-actions">
+        <div class="action-notes">
+            ${company.status === 'pending'
+                ? `<small style="color: var(--dark-gray); font-size: 13px;">
+                        <i class="far fa-clock"></i> Waiting for review (${daysAgo} day${daysAgo > 1 ? 's' : ''})
+                   </small>`
+                : company.status === 'approved'
+                ? `<small style="color: var(--success); font-size: 13px;">
+                        <i class="fas fa-check-circle"></i> Approved on ${company.date}
+                   </small>`
+                : `<small style="color: var(--danger); font-size: 13px;">
+                        <i class="fas fa-times-circle"></i> Rejected on ${company.date}
+                   </small>`
+            }
+        </div>
+
+        <div class="action-buttons">
+            ${company.status === 'pending' ? `
+                <button class="btn btn-success btn-sm approve-btn" data-company-id="${company.id}">
+                    <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn btn-danger btn-sm reject-btn" data-company-id="${company.id}">
+                    <i class="fas fa-times"></i> Reject
+                </button>
+            ` : ''}
+
+            <button class="btn btn-outline btn-sm view-btn" data-company-id="${company.id}">
+                <i class="fas fa-eye"></i> View
+            </button>
+
+            ${company.status !== 'pending' ? `
+                <button class="btn btn-outline btn-sm revert-btn" data-company-id="${company.id}">
+                    <i class="fas fa-undo"></i> Revert
+                </button>
+            ` : ''}
+        </div>
+    </div>
+`;
+
+
+            // Add event listeners to buttons
+            setTimeout(() => {
+                card.querySelector('.approve-btn')?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    approveCompany(company.id);
+                });
+
+                card.querySelector('.reject-btn')?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openRejectModal(company);
+                });
+
+                card.querySelector('.view-btn')?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openViewModal(company);
+                });
+
+                card.querySelector('.revert-btn')?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    revertCompany(company.id);
+                });
+            }, 0);
+
+            return card;
+        }
+
+        function filterCompanies() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const status = statusFilter.value;
+            const industry = industryFilter.value;
+            const size = sizeFilter.value;
+            const date = dateFilter.value;
+
+            const filtered = companiesData.filter(company => {
+                // Search term filter
+                if (searchTerm && !company.company_name.toLowerCase().includes(searchTerm) &&
+                    !company.company_email.toLowerCase().includes(searchTerm) &&
+                    !company.industry.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+
+                // Status filter
+                if (status !== 'all' && company.status !== status) {
+                    return false;
+                }
+
+                // Industry filter
+                if (industry !== 'all' && company.industry.toLowerCase() !== industry.toLowerCase()) {
+                    return false;
+                }
+
+                // Size filter
+                if (size !== 'all' && !company.size.includes(size)) {
+                    return false;
+                }
+
+                // Date filter
+                if (date && company.date !== date) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            renderCompanies(filtered);
+        }
+
+        function updateStats(companies) {
+            const total = companies.length;
+            const pending = companies.filter(c => c.status === 'pending').length;
+            const approved = companies.filter(c => c.status === 'approved').length;
+            const rejected = companies.filter(c => c.status === 'rejected').length;
+
+
+
+            // Update page title
+            const pageTitle = document.querySelector('.page-title h2');
+            const pageSubtitle = document.querySelector('.page-title p');
+
+            if (statusFilter.value === 'pending') {
+                pageTitle.textContent = 'Pending Company Registrations';
+                pageSubtitle.textContent = `${pending} companies waiting for approval`;
+            } else if (statusFilter.value === 'approved') {
+                pageTitle.textContent = 'Approved Companies';
+                pageSubtitle.textContent = `${approved} companies approved`;
+            } else if (statusFilter.value === 'rejected') {
+                pageTitle.textContent = 'Rejected Companies';
+                pageSubtitle.textContent = `${rejected} companies rejected`;
+            } else {
+                pageTitle.textContent = 'All Companies';
+                pageSubtitle.textContent = `${total} total companies`;
+            }
+        }
+
+        function approveCompany(companyId) {
+            if (confirm('Are you sure you want to approve this company?')) {
+                // In production, this would send to Django backend
+                alert(`Company ${companyId} approved successfully!`);
+                window.location.href=`/manage-company/${companyId}/Company/`;
+                // Update company status
+                const companyIndex = companiesData.findIndex(c => c.id == companyId);
+                if (companyIndex !== -1) {
+                    companiesData[companyIndex].status = 'approved';
+                    renderCompanies(companiesData);
+                }
+            }
+        }
+
+        function openRejectModal(company) {
+            rejectCompanyName.value = company.company_name;
+            rejectForm.setAttribute('data-company-id', company.id);
+            openModal('rejectModal');
+        }
+
+        function openViewModal(company) {
+            // Populate view modal with company data
+            const logoEl = document.getElementById('viewCompanyLogo');
+            logoEl.src = company.logo || '/static/img/default-company.png';
+            logoEl.onerror = () => {
+                logoEl.src = '/static/img/default-company.png';
+            };
+            document.getElementById('viewCompanyNameHeader').textContent = company.company_name;
+            document.getElementById('viewIndustryHeader').textContent = `${company.industry} • ${company.size}`;
+            document.getElementById('viewCompanyName').textContent = company.company_name;
+            document.getElementById('viewIndustry').textContent = company.industry;
+            document.getElementById('viewCompanyEmail').textContent = company.company_email;
+            document.getElementById('viewCompanyPhone').textContent = company.company_phone;
+            document.getElementById('viewWebsite').textContent = company.website;
+            document.getElementById('viewSize').textContent = company.size;
+            document.getElementById('viewFname').textContent = company.fname;
+            document.getElementById('viewLname').textContent = company.lname;
+            document.getElementById('viewAdminEmail').textContent = company.email;
+            document.getElementById('viewRights').textContent = company.rights;
+            document.getElementById('viewDate').textContent = company.date;
+            document.getElementById('viewDescription').textContent = company.description;
+
+            openModal('viewModal');
+        }
+
+        function revertCompany(companyId) {
+            if (confirm('Are you sure you want to revert this company to pending status?')) {
+                // Update company status
+                const companyIndex = companiesData.findIndex(c => c.id == companyId);
+                if (companyIndex !== -1) {
+                    companiesData[companyIndex].status = 'pending';
+                    renderCompanies(companiesData);
+                }
+            }
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Initialize the admin page
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Your Company | JobMatcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d62d9;
+            --primary-light: #4285f4;
+            --secondary: #34a853;
+            --accent: #ea4335;
+            --warning: #f9ab00;
+            --success: #0f9d58;
+            --danger: #db4437;
+            --light: #ffffff;
+            --light-gray: #f8f9fa;
+            --gray: #9aa0a6;
+            --dark-gray: #5f6368;
+            --dark: #202124;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+            --gradient-business: linear-gradient(135deg, #1a73e8 0%, #0f9d58 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(26, 115, 232, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .registration-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .form-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .form-header p {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+        }
+
+        .form-header p a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-header p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Styles */
+        .company-form {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 15px;
+        }
+
+        .form-label .required {
+            color: var(--danger);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e8eaed;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--dark);
+            background: white;
+            transition: var(--transition);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+        }
+
+        .form-input.error, .form-select.error {
+            border-color: var(--danger);
+        }
+
+        .form-input.success, .form-select.success {
+            border-color: var(--success);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 13px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: var(--success);
+            font-size: 13px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            display: none;
+        }
+
+        .info-message {
+            color: var(--dark-gray);
+            font-size: 13px;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Company Type */
+        .company-type {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .type-option {
+            border: 2px solid #e8eaed;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .type-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .type-option.selected {
+            border-color: var(--primary);
+            background: rgba(26, 115, 232, 0.05);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.1);
+        }
+
+        .type-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin: 0 auto 15px;
+        }
+
+        .type-icon.enterprise {
+            background: linear-gradient(135deg, #ea4335 0%, #f9ab00 100%);
+        }
+
+        .type-icon.startup {
+            background: linear-gradient(135deg, #0f9d58 0%, #34a853 100%);
+        }
+
+        .type-option h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .type-option p {
+            font-size: 13px;
+            color: var(--dark-gray);
+        }
+
+        /* Subscription Plans */
+        .subscription-plans {
+            margin-bottom: 30px;
+        }
+
+        .plans-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .plans-header h3 {
+            font-size: 18px;
+            color: var(--dark);
+        }
+
+        .billing-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .plan-card {
+            border: 2px solid #e8eaed;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .plan-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .plan-card.selected {
+            border-color: var(--primary);
+            background: rgba(26, 115, 232, 0.05);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.1);
+        }
+
+        .plan-card.popular {
+            border-color: var(--primary);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .plan-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .plan-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .plan-period {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .plan-features li i {
+            color: var(--success);
+        }
+
+        /* Terms Agreement */
+        .terms-agreement {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .terms-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-top: 3px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .terms-text {
+            font-size: 14px;
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+
+        .terms-text a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: var(--gradient-business);
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 115, 232, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-lg);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e8eaed;
+        }
+
+        .sidebar-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .sidebar-header p {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .benefits-list {
+            margin-bottom: 30px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(26, 115, 232, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h4 {
+            font-size: 15px;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .benefit-content p {
+            font-size: 13px;
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+            border-radius: 12px;
+            padding: 25px;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-card h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .stats-numbers {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .registration-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .company-type, .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .form-section {
+                padding: 30px 20px;
+            }
+
+            .sidebar {
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .form-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-section {
+                padding: 25px 15px;
+            }
+
+            .submit-btn {
+                padding: 14px 20px;
+            }
+        }
+
+        /* Form Steps */
+        .form-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .form-steps:before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e8eaed;
+            z-index: 1;
+        }
+
+        .step-progress {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            height: 2px;
+            background: var(--primary);
+            z-index: 2;
+            transition: var(--transition);
+            width: 33.33%;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+            width: 33.33%;
+        }
+
+        .step-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #e8eaed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+
+        .step.active .step-icon {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .step.completed .step-icon {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: var(--dark-gray);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .step.completed .step-label {
+            color: var(--success);
+        }
+
+        /* Step Content */
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e8eaed;
+        }
+
+        .btn-prev {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--dark-gray);
+            border: 2px solid #e8eaed;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-prev:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(26, 115, 232, 0.05);
+        }
+
+        .btn-next {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-next:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                JobMatcher
+            </a>
+            <div class="header-actions">
+                <a href="/login/" class="btn btn-outline">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="registration-wrapper">
+            <!-- Form Section -->
+            <section class="form-section">
+                <!-- Form Steps -->
+                <div class="form-steps">
+                    <div class="step-progress" id="stepProgress"></div>
+                    <div class="step active" id="step1">
+                        <div class="step-icon">1</div>
+                        <div class="step-label">Company Info</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-icon">2</div>
+                        <div class="step-label">Plan Selection</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-icon">3</div>
+                        <div class="step-label">Admin Account</div>
+                    </div>
+                </div>
+
+                <!-- Form Header -->
+                <div class="form-header">
+                    <h1>Register Your Company</h1>
+                    <p>Post jobs, find talent, and grow your team with JobMatcher</p>
+                </div>
+
+                <!-- Company Registration Form -->
+                <form class="company-form" id="companyForm" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- Step 1: Company Information -->
+                    <div class="step-content active" id="stepContent1">
+                        <div class="form-group">
+                            <label class="form-label" for="companyName">Company Name <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="text" id="companyName" name="company_name" class="form-input" placeholder="Enter your company name" required>
+                                <i class="fas fa-building input-icon"></i>
+                            </div>
+                            <div class="error-message" id="companyNameError">
+                                <i class="fas fa-exclamation-circle"></i> Please enter your company name
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="companyEmail">Company Email <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <input type="email" id="companyEmail" name="company_email" class="form-input" placeholder="contact@company.com" required>
+                                    <i class="fas fa-envelope input-icon"></i>
+                                </div>
+                                <div class="error-message" id="companyEmailError">
+                                    <i class="fas fa-exclamation-circle"></i> Please enter a valid email
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="companyPhone">Phone Number</label>
+                                <div class="input-wrapper">
+                                    <input type="tel" id="companyPhone" name="company_phone" class="form-input" placeholder="+1 (555) 123-4567">
+                                    <i class="fas fa-phone input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="companyWebsite">Company Website</label>
+                            <div class="input-wrapper">
+                                <input type="url" id="companyWebsite" name="website" class="form-input" placeholder="https://www.company.com">
+                                <i class="fas fa-globe input-icon"></i>
+                            </div>
+                            <div class="info-message">
+                                Include https:// in your website URL
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="companySize">Company Size <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <select id="companySize" name="size" class="form-select" required>
+                                    <option value="">Select number of employees</option>
+                                    <option value="1-10">1-10 employees</option>
+                                    <option value="11-50">11-50 employees</option>
+                                    <option value="51-200">51-200 employees</option>
+                                    <option value="201-500">201-500 employees</option>
+                                    <option value="501-1000">501-1000 employees</option>
+                                    <option value="1000+">1000+ employees</option>
+                                </select>
+                                <i class="fas fa-users input-icon"></i>
+                            </div>
+                            <div class="error-message" id="companySizeError">
+                                <i class="fas fa-exclamation-circle"></i> Please select company size
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="companyIndustry">Industry <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <select id="companyIndustry" name="industry" class="form-select" required>
+                                    <option value="">Select your industry</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="finance">Finance & Banking</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="education">Education</option>
+                                    <option value="retail">Retail & E-commerce</option>
+                                    <option value="manufacturing">Manufacturing</option>
+                                    <option value="consulting">Consulting</option>
+                                    <option value="marketing">Marketing & Advertising</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <i class="fas fa-industry input-icon"></i>
+                            </div>
+                            <div class="error-message" id="companyIndustryError">
+                                <i class="fas fa-exclamation-circle"></i> Please select industry
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="logo">Logo</label>
+                            <div class="input-wrapper">
+                                <input type="file" id="logo" name="logo" class="form-input">
+                                <i class="fas fa-upload input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="companyDescription">Company Description</label>
+                            <textarea id="companyDescription" name="description" class="form-textarea" placeholder="Briefly describe your company, mission, and culture..."></textarea>
+                            <div class="info-message">
+                                This will be shown to potential candidates (max 500 characters)
+                            </div>
+                        </div>
+
+                        <div class="step-navigation">
+                            <div></div> <!-- Empty div for spacing -->
+                            <button type="button" class="btn-next" id="nextStep1">
+                                Next: Plan Selection <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Plan Selection -->
+                    <div class="step-content" id="stepContent2">
+                        <h3 style="margin-bottom: 30px; color: var(--dark);">Choose Your Plan</h3>
+
+                        <div class="company-type" style="margin-bottom: 40px;">
+                            <div class="type-option selected" data-type="startup">
+                                <div class="type-icon startup">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+                                <h4>Startup/SME</h4>
+                                <p>Small to medium businesses</p>
+                            </div>
+                            <div class="type-option" data-type="enterprise">
+                                <div class="type-icon enterprise">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <h4>Enterprise</h4>
+                                <p>Large organizations</p>
+                            </div>
+                            <div class="type-option" data-type="agency">
+                                <div class="type-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h4>Agency</h4>
+                                <p>Recruitment agencies</p>
+                            </div>
+                        </div>
+
+                        <div class="subscription-plans">
+                            <div class="plans-header">
+                                <h3>Subscription Plans</h3>
+                                <div class="billing-toggle">
+                                    <span>Monthly</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="billingToggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Annual <small style="color: var(--success);">(Save 20%)</small></span>
+                                </div>
+                            </div>
+
+                            <div class="plans-grid">
+                                <div class="plan-card" data-plan="basic">
+                                    <div class="plan-header">
+                                        <div class="plan-name">Basic</div>
+                                        <div class="plan-price">$49</div>
+                                        <div class="plan-period">per month</div>
+                                    </div>
+                                    <ul class="plan-features">
+                                        <li><i class="fas fa-check"></i> 5 active job posts</li>
+                                        <li><i class="fas fa-check"></i> 100 candidate views/month</li>
+                                        <li><i class="fas fa-check"></i> Basic applicant tracking</li>
+                                        <li><i class="fas fa-check"></i> Email support</li>
+                                    </ul>
+                                </div>
+
+                                <div class="plan-card selected popular" data-plan="professional">
+                                    <div class="plan-badge">MOST POPULAR</div>
+                                    <div class="plan-header">
+                                        <div class="plan-name">Professional</div>
+                                        <div class="plan-price">$99</div>
+                                        <div class="plan-period">per month</div>
+                                    </div>
+                                    <ul class="plan-features">
+                                        <li><i class="fas fa-check"></i> 15 active job posts</li>
+                                        <li><i class="fas fa-check"></i> 500 candidate views/month</li>
+                                        <li><i class="fas fa-check"></i> Advanced applicant tracking</li>
+                                        <li><i class="fas fa-check"></i> AI candidate matching</li>
+                                        <li><i class="fas fa-check"></i> Priority support</li>
+                                    </ul>
+                                </div>
+
+                                <div class="plan-card" data-plan="enterprise">
+                                    <div class="plan-header">
+                                        <div class="plan-name">Enterprise</div>
+                                        <div class="plan-price">$199</div>
+                                        <div class="plan-period">per month</div>
+                                    </div>
+                                    <ul class="plan-features">
+                                        <li><i class="fas fa-check"></i> Unlimited job posts</li>
+                                        <li><i class="fas fa-check"></i> Unlimited candidate views</li>
+                                        <li><i class="fas fa-check"></i> Custom workflows</li>
+                                        <li><i class="fas fa-check"></i> Advanced analytics</li>
+                                        <li><i class="fas fa-check"></i> Dedicated account manager</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-navigation">
+                            <button type="button" class="btn-prev" id="prevStep2">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="button" class="btn-next" id="nextStep2">
+                                Next: Admin Account <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Admin Account -->
+                    <div class="step-content" id="stepContent3">
+                        <h3 style="margin-bottom: 30px; color: var(--dark);">Create Admin Account</h3>
+                        <p style="color: var(--dark-gray); margin-bottom: 30px;">
+                            This account will have full administrative access to manage your company's job posts and hiring.
+                        </p>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="adminFirstName">First Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="adminFirstName" name="fname" class="form-input" placeholder="Enter first name" required>
+                                    <i class="fas fa-user input-icon"></i>
+                                </div>
+                                <div class="error-message" id="adminFirstNameError">
+                                    <i class="fas fa-exclamation-circle"></i> Please enter first name
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="adminLastName">Last Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="adminLastName" name="lname" class="form-input" placeholder="Enter last name" required>
+                                    <i class="fas fa-user input-icon"></i>
+                                </div>
+                                <div class="error-message" id="adminLastNameError">
+                                    <i class="fas fa-exclamation-circle"></i> Please enter last name
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="adminEmail">Email Address <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="email" id="adminEmail" name="email" class="form-input" placeholder="admin@company.com" required>
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                            <div class="error-message" id="adminEmailError">
+                                <i class="fas fa-exclamation-circle"></i> Please enter a valid email
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="adminPassword">Password <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="password" id="adminPassword" name="password" class="form-input" placeholder="Create a strong password" required>
+                                <button type="button" class="password-toggle" id="adminPasswordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="error-message" id="adminPasswordError">
+                                <i class="fas fa-exclamation-circle"></i> Password must be at least 8 characters
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="confirmAdminPassword">Confirm Password <span class="required">*</span></label>
+                            <div class="input-wrapper">
+                                <input type="password" id="confirmAdminPassword" class="form-input" placeholder="Confirm your password" required>
+                                <button type="button" class="password-toggle" id="confirmAdminPasswordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="error-message" id="confirmAdminPasswordError">
+                                <i class="fas fa-exclamation-circle"></i> Passwords do not match
+                            </div>
+                        </div>
+
+                        <div class="terms-agreement">
+                            <input type="checkbox" id="terms" class="terms-checkbox" required>
+                            <label for="terms" class="terms-text">
+                                I agree to the <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a>, and <a href="#">Subscription Agreement</a>. I understand that I will be billed according to the selected plan.
+                            </label>
+                        </div>
+
+                        <div class="step-navigation">
+                            <button type="button" class="btn-prev" id="prevStep3">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <span id="btnText">Complete Registration</span>
+                                <div class="loading-spinner" id="loadingSpinner"></div>
+                                <i class="fas fa-check" id="btnIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h3>Why Companies Choose JobMatcher</h3>
+                    <p>Join 10,000+ companies hiring smarter</p>
+                </div>
+
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>AI-Powered Matching</h4>
+                            <p>Our algorithm finds the most qualified candidates for your job requirements.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Advanced Analytics</h4>
+                            <p>Track hiring metrics and optimize your recruitment process with detailed insights.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Team Collaboration</h4>
+                            <p>Invite team members, assign roles, and collaborate on hiring decisions.</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Secure & Compliant</h4>
+                            <p>GDPR compliant, secure data handling, and enterprise-grade security.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <h4>Our Hiring Success</h4>
+                    <div class="stats-numbers">
+                        <div class="stat">
+                            <div class="stat-value">10K+</div>
+                            <div class="stat-label">Companies</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">85%</div>
+                            <div class="stat-label">Faster Hiring</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">4.8★</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const form = document.getElementById('companyForm');
+        const stepProgress = document.getElementById('stepProgress');
+        const steps = [1, 2, 3];
+        let currentStep = 1;
+
+        // Step elements
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+
+        // Step content
+        const stepContent1 = document.getElementById('stepContent1');
+        const stepContent2 = document.getElementById('stepContent2');
+        const stepContent3 = document.getElementById('stepContent3');
+
+        // Navigation buttons
+        const nextStep1 = document.getElementById('nextStep1');
+        const nextStep2 = document.getElementById('nextStep2');
+        const prevStep2 = document.getElementById('prevStep2');
+        const prevStep3 = document.getElementById('prevStep3');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnIcon = document.getElementById('btnIcon');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        // Step 1 fields
+        const companyName = document.getElementById('companyName');
+        const companyEmail = document.getElementById('companyEmail');
+        const companySize = document.getElementById('companySize');
+        const companyIndustry = document.getElementById('companyIndustry');
+
+        // Step 3 fields
+        const adminFirstName = document.getElementById('adminFirstName');
+        const adminLastName = document.getElementById('adminLastName');
+        const adminEmail = document.getElementById('adminEmail');
+        const adminPassword = document.getElementById('adminPassword');
+        const confirmAdminPassword = document.getElementById('confirmAdminPassword');
+
+        // Error messages
+        const errorMessages = {
+            companyName: document.getElementById('companyNameError'),
+            companyEmail: document.getElementById('companyEmailError'),
+            companySize: document.getElementById('companySizeError'),
+            companyIndustry: document.getElementById('companyIndustryError'),
+            adminFirstName: document.getElementById('adminFirstNameError'),
+            adminLastName: document.getElementById('adminLastNameError'),
+            adminEmail: document.getElementById('adminEmailError'),
+            adminPassword: document.getElementById('adminPasswordError'),
+            confirmAdminPassword: document.getElementById('confirmAdminPasswordError')
+        };
+
+        // Initialize
+        function init() {
+            hideAllErrors();
+            setupEventListeners();
+            setupCompanyTypeSelection();
+            setupPlanSelection();
+            setupBillingToggle();
+            setupPasswordToggles();
+        }
+
+        function hideAllErrors() {
+            Object.values(errorMessages).forEach(error => {
+                if (error) error.style.display = 'none';
+            });
+        }
+
+        function setupEventListeners() {
+            // Step navigation
+            nextStep1.addEventListener('click', validateStep1);
+            nextStep2.addEventListener('click', validateStep2);
+            prevStep2.addEventListener('click', () => goToStep(1));
+            prevStep3.addEventListener('click', () => goToStep(2));
+
+            // Form submission
+            form.addEventListener('submit', handleSubmit);
+
+            // Real-time validation for step 1
+            companyName.addEventListener('input', () => validateField(companyName, errorMessages.companyName, 'Company name is required'));
+            companyEmail.addEventListener('input', validateCompanyEmail);
+            companySize.addEventListener('change', () => validateField(companySize, errorMessages.companySize, 'Please select company size'));
+            companyIndustry.addEventListener('change', () => validateField(companyIndustry, errorMessages.companyIndustry, 'Please select industry'));
+
+            // Real-time validation for step 3
+            adminFirstName.addEventListener('input', () => validateField(adminFirstName, errorMessages.adminFirstName, 'First name is required'));
+            adminLastName.addEventListener('input', () => validateField(adminLastName, errorMessages.adminLastName, 'Last name is required'));
+            adminEmail.addEventListener('input', validateAdminEmail);
+            adminPassword.addEventListener('input', validateAdminPassword);
+            confirmAdminPassword.addEventListener('input', validateConfirmAdminPassword);
+        }
+
+        function setupCompanyTypeSelection() {
+            const typeOptions = document.querySelectorAll('.type-option');
+            typeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    typeOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        function setupPlanSelection() {
+            const planCards = document.querySelectorAll('.plan-card');
+            planCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    planCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        }
+
+        function setupBillingToggle() {
+            const toggle = document.getElementById('billingToggle');
+            const planPrices = {
+                basic: { monthly: '$49', annual: '$39' },
+                professional: { monthly: '$99', annual: '$79' },
+                enterprise: { monthly: '$199', annual: '$159' }
+            };
+
+            toggle.addEventListener('change', function() {
+                const isAnnual = this.checked;
+                const period = isAnnual ? 'Annual (Save 20%)' : 'Monthly';
+
+                // Update all plan prices
+                Object.keys(planPrices).forEach(plan => {
+                    const priceElement = document.querySelector(`.plan-card[data-plan="${plan}"] .plan-price`);
+                    const periodElement = document.querySelector(`.plan-card[data-plan="${plan}"] .plan-period`);
+
+                    if (priceElement && periodElement) {
+                        const price = isAnnual ? planPrices[plan].annual : planPrices[plan].monthly;
+                        priceElement.textContent = price;
+                        periodElement.textContent = isAnnual ? 'per month, billed annually' : 'per month';
+                    }
+                });
+            });
+        }
+
+        function setupPasswordToggles() {
+            const adminPasswordToggle = document.getElementById('adminPasswordToggle');
+            const confirmAdminPasswordToggle = document.getElementById('confirmAdminPasswordToggle');
+
+            adminPasswordToggle.addEventListener('click', () => togglePasswordVisibility(adminPassword, adminPasswordToggle));
+            confirmAdminPasswordToggle.addEventListener('click', () => togglePasswordVisibility(confirmAdminPassword, confirmAdminPasswordToggle));
+        }
+
+        function validateField(field, errorElement, message) {
+            if (field.value.trim() === '') {
+                field.classList.add('error');
+                field.classList.remove('success');
+                errorElement.textContent = message;
+                errorElement.style.display = 'flex';
+                return false;
+            } else {
+                field.classList.remove('error');
+                field.classList.add('success');
+                errorElement.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validateCompanyEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (companyEmail.value.trim() === '') {
+                companyEmail.classList.add('error');
+                companyEmail.classList.remove('success');
+                errorMessages.companyEmail.textContent = 'Company email is required';
+                errorMessages.companyEmail.style.display = 'flex';
+                return false;
+            } else if (!emailRegex.test(companyEmail.value)) {
+                companyEmail.classList.add('error');
+                companyEmail.classList.remove('success');
+                errorMessages.companyEmail.textContent = 'Please enter a valid email address';
+                errorMessages.companyEmail.style.display = 'flex';
+                return false;
+            } else {
+                companyEmail.classList.remove('error');
+                companyEmail.classList.add('success');
+                errorMessages.companyEmail.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validateAdminEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (adminEmail.value.trim() === '') {
+                adminEmail.classList.add('error');
+                adminEmail.classList.remove('success');
+                errorMessages.adminEmail.textContent = 'Email address is required';
+                errorMessages.adminEmail.style.display = 'flex';
+                return false;
+            } else if (!emailRegex.test(adminEmail.value)) {
+                adminEmail.classList.add('error');
+                adminEmail.classList.remove('success');
+                errorMessages.adminEmail.textContent = 'Please enter a valid email address';
+                errorMessages.adminEmail.style.display = 'flex';
+                return false;
+            } else {
+                adminEmail.classList.remove('error');
+                adminEmail.classList.add('success');
+                errorMessages.adminEmail.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validateAdminPassword() {
+            const pass = adminPassword.value;
+
+            if (pass.length < 8) {
+                adminPassword.classList.add('error');
+                adminPassword.classList.remove('success');
+                errorMessages.adminPassword.textContent = 'Password must be at least 8 characters';
+                errorMessages.adminPassword.style.display = 'flex';
+                return false;
+            } else {
+                adminPassword.classList.remove('error');
+                adminPassword.classList.add('success');
+                errorMessages.adminPassword.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validateConfirmAdminPassword() {
+            if (confirmAdminPassword.value !== adminPassword.value) {
+                confirmAdminPassword.classList.add('error');
+                confirmAdminPassword.classList.remove('success');
+                errorMessages.confirmAdminPassword.style.display = 'flex';
+                return false;
+            } else {
+                confirmAdminPassword.classList.remove('error');
+                confirmAdminPassword.classList.add('success');
+                errorMessages.confirmAdminPassword.style.display = 'none';
+                return true;
+            }
+        }
+
+        function validateStep1() {
+            const isValid =
+                validateField(companyName, errorMessages.companyName, 'Company name is required') &&
+                validateCompanyEmail() &&
+                validateField(companySize, errorMessages.companySize, 'Please select company size') &&
+                validateField(companyIndustry, errorMessages.companyIndustry, 'Please select industry');
+
+            if (isValid) {
+                goToStep(2);
+            }
+        }
+
+        function validateStep2() {
+            // For demo, we'll accept step 2 without validation
+            // In real app, you'd validate plan selection
+            goToStep(3);
+        }
+
+        function goToStep(step) {
+            // Update step progress bar
+            stepProgress.style.width = `${(step / 3) * 100}%`;
+
+            // Update step indicators
+            [step1, step2, step3].forEach((s, index) => {
+                s.classList.remove('active', 'completed');
+                if (index + 1 < step) {
+                    s.classList.add('completed');
+                } else if (index + 1 === step) {
+                    s.classList.add('active');
+                }
+            });
+
+            // Show current step content
+            [stepContent1, stepContent2, stepContent3].forEach((content, index) => {
+                content.classList.remove('active');
+                if (index + 1 === step) {
+                    content.classList.add('active');
+                }
+            });
+
+            currentStep = step;
+
+            // Scroll to top of form
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+
+            // Validate step 3
+            const isStep3Valid =
+                validateField(adminFirstName, errorMessages.adminFirstName, 'First name is required') &&
+                validateField(adminLastName, errorMessages.adminLastName, 'Last name is required') &&
+                validateAdminEmail() &&
+                validateAdminPassword() &&
+                validateConfirmAdminPassword();
+
+            const isTermsAccepted = document.getElementById('terms').checked;
+
+            if (!isTermsAccepted) {
+                alert('Please accept the Terms of Service and Subscription Agreement to continue.');
+                return;
+            }
+
+            if (!isStep3Valid) {
+                // Scroll to first error
+                const firstError = document.querySelector('.error-message[style*="display: flex"]');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            // Show loading state
+            btnText.textContent = 'Processing...';
+            btnIcon.style.display = 'none';
+            loadingSpinner.style.display = 'inline-block';
+            submitBtn.disabled = true;
+
+            // Get selected values
+            const companyType = document.querySelector('.type-option.selected').getAttribute('data-type');
+            const selectedPlan = document.querySelector('.plan-card.selected').getAttribute('data-plan');
+            const billingCycle = document.getElementById('billingToggle').checked ? 'annual' : 'monthly';
+
+            // Simulate API call
+            setTimeout(() => {
+                alert('Registration success. Kindly wait for the approval from the admin');
+                form.submit();
+                // Hide loading state
+                loadingSpinner.style.display = 'none';
+                btnIcon.style.display = 'inline-block';
+
+                // Show success message
+                showSuccessMessage(companyName.value, selectedPlan, billingCycle);
+            }, 2000);
+        }
+
+        function showSuccessMessage(companyName, plan, billingCycle) {
+            const successHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px;">
+                    <div style="background: white; border-radius: 16px; padding: 40px; text-align: center; max-width: 600px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                        <div style="width: 80px; height: 80px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px;">
+                            <i class="fas fa-check" style="color: white; font-size: 36px;"></i>
+                        </div>
+                        <h2 style="margin-bottom: 15px; color: var(--dark);">Company Registered Successfully!</h2>
+                        <p style="color: var(--dark-gray); margin-bottom: 25px; line-height: 1.6;">
+                            Congratulations! <strong>${companyName}</strong> has been successfully registered with JobMatcher.
+                        </p>
+
+                        <div style="background: rgba(26, 115, 232, 0.05); border-radius: 12px; padding: 20px; margin-bottom: 30px; text-align: left;">
+                            <h4 style="margin-bottom: 15px; color: var(--primary);">Registration Details:</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div>
+                                    <strong>Plan:</strong> ${plan.charAt(0).toUpperCase() + plan.slice(1)}
+                                </div>
+                                <div>
+                                    <strong>Billing:</strong> ${billingCycle.charAt(0).toUpperCase() + billingCycle.slice(1)}
+                                </div>
+                                <div>
+                                    <strong>Status:</strong> <span style="color: var(--success);">Active</span>
+                                </div>
+                                <div>
+                                    <strong>Next Steps:</strong> Check your email
+                                </div>
+                            </div>
+                        </div>
+
+                        <p style="color: var(--dark-gray); margin-bottom: 30px; font-size: 0.95rem; line-height: 1.6;">
+                            We've sent a verification email to your admin account. Please verify your email to access all features.
+                        </p>
+
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <button id="goToDashboard" style="flex: 1; padding: 14px 20px; background: var(--gradient-primary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                            </button>
+                            <button id="postJob" style="flex: 1; padding: 14px 20px; background: var(--success); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                <i class="fas fa-plus"></i> Post First Job
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const successDiv = document.createElement('div');
+            successDiv.innerHTML = successHTML;
+            document.body.appendChild(successDiv);
+
+            // Add event listeners to success buttons
+            setTimeout(() => {
+                document.getElementById('goToDashboard').addEventListener('click', () => {
+                    alert('Redirecting to company dashboard...\n\nIn production, this would redirect to the company dashboard.');
+                });
+
+                document.getElementById('postJob').addEventListener('click', () => {
+                    alert('Redirecting to job posting form...\n\nIn production, this would redirect to create job page.');
+                });
+            }, 100);
+        }
+
+        function togglePasswordVisibility(passwordField, toggleButton) {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+
+            const icon = toggleButton.querySelector('i');
+            if (type === 'text') {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Initialize the company registration page
+        init();
+    </script>
+</body>
+</html>
